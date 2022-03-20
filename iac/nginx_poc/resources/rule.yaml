@@ -1,0 +1,19 @@
+network:
+  host_cidr: "10.0.0.0/16"
+  region: "ap-northeast-1"
+  subnets:
+    newbits: 6
+    available_zones:
+      - a
+      - c
+    pub:
+      amount: 2
+      max: 20
+    prv:
+      amount: 4
+      max: 44
+
+# Standard Hostnum : 16
+# pub.max + prv.max == 2^newbits // 4:16 / 6:64 / 8:256 /
+# pub.amount <= pub.max
+# prv.amount <= prv.max
