@@ -9,5 +9,5 @@ variable "rule" {
 
 variable "tags" {
   description = "default tags."
-  type = object({})
+  type        = object({})
 }

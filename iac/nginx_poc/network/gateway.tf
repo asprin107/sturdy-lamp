@@ -9,10 +9,10 @@ resource "aws_internet_gateway" "main" {
 }
 
 resource "aws_nat_gateway" "main" {
-  count = length(aws_subnet.subnets_private)
-  subnet_id = aws_subnet.subnets_private[count.index].id
+  count             = length(aws_subnet.subnets_private)
+  subnet_id         = aws_subnet.subnets_private[count.index].id
   connectivity_type = "public"
-  allocation_id = aws_eip.nat_ip[count.index].id
+  allocation_id     = aws_eip.nat_ip[count.index].id
 
   tags = merge(
     var.tags,
@@ -26,7 +26,7 @@ resource "aws_nat_gateway" "main" {
 
 resource "aws_eip" "nat_ip" {
   count = length(aws_subnet.subnets_private)
-  vpc = true
+  vpc   = true
   tags = merge(
     var.tags,
     {
