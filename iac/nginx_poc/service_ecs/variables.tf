@@ -1,8 +1,9 @@
-variable "TFC_WORKSPACE_NAME" {
-  type = string
+variable "main_vpc_id" {
+  description = "Main VPC id."
+  type        = string
 }
+
 variable "project_name" {
   description = "Project Name."
   type        = string
-  default     = "nginx-poc"
 }

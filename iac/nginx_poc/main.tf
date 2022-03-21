@@ -7,6 +7,7 @@ locals {
     Account = local.profile
   }
 }
+
 module "network" {
   source = "./network"
 
@@ -14,4 +15,11 @@ module "network" {
   rule         = local.rule
 
   tags = local.tags
+}
+
+module "service_ecs" {
+  source = "./service_ecs"
+
+  main_vpc_id  = module.network.main_vpc_id
+  project_name = var.project_name
 }
