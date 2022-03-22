@@ -18,14 +18,14 @@ module "network" {
 }
 
 module "service_ecs" {
-  source = "./service_ecs"
+  source     = "./service_ecs"
   depends_on = [module.network]
 
   main_vpc_id  = module.network.main_vpc_id
   project_name = var.project_name
 
-  alb_subnets  = [module.network.subnets_public]
-  alb_sg_rules = local.rule.security_group.nginx-alb
+  alb_subnet_ids = [for v in module.network.subnets_public : v.id]
+  alb_sg_rules   = local.rule.security_group.nginx-alb
 
-  tags         = local.tags
+  tags = local.tags
 }

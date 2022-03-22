@@ -37,7 +37,7 @@ resource "aws_lb" "nginx" {
     prefix  = local.alb_name
     enabled = true
   }
-  subnets                    = [for v in var.alb_subnets : v.id]
+  subnets                    = var.alb_subnet_ids
   idle_timeout               = 60
   enable_deletion_protection = true
   enable_http2               = true

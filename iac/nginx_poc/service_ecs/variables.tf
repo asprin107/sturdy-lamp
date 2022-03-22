@@ -8,9 +8,9 @@ variable "project_name" {
   type        = string
 }
 
-variable "alb_subnets" {
+variable "alb_subnet_ids" {
   description = "Subnet list placed on alb"
-  type        = list(object({}))
+  type        = list(string)
 }
 
 variable "alb_sg_rules" {
