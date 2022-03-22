@@ -19,7 +19,13 @@ module "network" {
 
 module "service_ecs" {
   source = "./service_ecs"
+  depends_on = [module.network]
 
   main_vpc_id  = module.network.main_vpc_id
   project_name = var.project_name
+
+  alb_subnets  = [module.network.subnets_public]
+  alb_sg_rules = local.rule.security_group.nginx-alb
+
+  tags         = local.tags
 }
