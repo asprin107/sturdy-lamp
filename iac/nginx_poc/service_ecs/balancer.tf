@@ -27,6 +27,7 @@ resource "aws_alb_target_group" "alb_http_test_tg" {
 }
 
 resource "aws_lb" "nginx" {
+  depends_on = [aws_s3_bucket_policy.alb_access]
   load_balancer_type         = "application"
   internal                   = false
   name                       = local.alb_name
