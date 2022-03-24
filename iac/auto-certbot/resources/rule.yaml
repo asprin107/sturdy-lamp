@@ -7,10 +7,10 @@ network:
       - a
       - c
     pub:
-      amount: 2
+      amount: 1
       max: 20
     prv:
-      amount: 2
+      amount: 0
       max: 44
 
 security_group:
@@ -24,6 +24,11 @@ security_group:
       protocol: "tcp"
       from_port: 81
       to_port: 81
+      type: "ingress"
+    ssh-in:
+      protocol: "tcp"
+      from_port: 22
+      to_port: 22
       type: "ingress"
     all-out:
       protocol: "all"
