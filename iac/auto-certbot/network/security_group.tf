@@ -20,6 +20,14 @@ resource "aws_security_group_rule" "allow_in_public_web" {
   type              = "ingress"
   cidr_blocks       = ["0.0.0.0/0"]
 }
+resource "aws_security_group_rule" "allow_in_public_https" {
+  from_port         = 443
+  protocol          = "tcp"
+  security_group_id = aws_security_group.public_web.id
+  to_port           = 443
+  type              = "ingress"
+  cidr_blocks       = ["0.0.0.0/0"]
+}
 resource "aws_security_group_rule" "allow_in_public_spring-app" {
   from_port         = 8080
   protocol          = "tcp"
