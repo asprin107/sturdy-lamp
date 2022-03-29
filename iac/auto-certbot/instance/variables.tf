@@ -21,3 +21,7 @@ variable "public_web_sg_id" {
 variable "PUB_KEY" {
   type = string
 }
+
+variable "eip_id" {
+  type = string
+}

@@ -28,11 +28,7 @@ resource "aws_network_interface" "certbot-apache" {
   }
 }
 
-resource "aws_eip" "service_ec2_public_ip" {
-  vpc      = true
-  instance = aws_instance.certbot-apache.id
-
-  tags = {
-    Name = "eip-${var.project_name}"
-  }
+resource "aws_eip_association" "certbot_ec2_ip" {
+  instance_id = aws_instance.certbot-apache.id
+  allocation_id = var.eip_id
 }

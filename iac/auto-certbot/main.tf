@@ -28,4 +28,15 @@ module "instance" {
   public_sbn_id    = module.network.subnets_public[0].id
   public_web_sg_id = module.network.security_group.id
   type             = "t3.medium"
+
+  eip_id = aws_eip.static-ip-for-certbot.id
+}
+
+resource "aws_eip" "static-ip-for-certbot" {
+  vpc = true
+  public_ipv4_pool = "amazon"
+
+  tags = {
+    Name = "eip-${var.project_name}"
+  }
 }
