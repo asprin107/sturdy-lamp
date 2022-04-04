@@ -1,26 +1,17 @@
-# target group
-# ALb nginx
-# TODO ALB Listener
-# TODO ALB Listener rule
-# TODO ALB Listener rule assiciation
-# TODO ECS Cluster
-# TODO ECS Task
-# TODO ECS Service
-
 locals {
   alb_name = "${var.project_name}-alb"
 }
 
 resource "aws_alb_target_group" "alb_http_service_tg" {
   vpc_id      = var.main_vpc_id
-  name        = "${var.project_name}-service"
+  name        = "${local.alb_name}-service"
   port        = 80
   protocol    = "HTTP"
   target_type = "ip"
 }
 resource "aws_alb_target_group" "alb_http_test_tg" {
   vpc_id      = var.main_vpc_id
-  name        = "${var.project_name}-test"
+  name        = "${local.alb_name}-test"
   port        = 81
   protocol    = "HTTP"
   target_type = "ip"
@@ -48,7 +39,38 @@ resource "aws_lb" "nginx" {
   tags = merge(
     var.tags,
     {
-      Name = "${var.project_name}-vpc"
+      Name = local.alb_name
+    }
+  )
+}
+
+resource "aws_lb_listener" "nginx_http" {
+  load_balancer_arn = aws_lb.nginx.arn
+  port = 80
+  protocol = "HTTP"
+  default_action {
+    type = "forward"
+    target_group_arn = aws_alb_target_group.alb_http_service_tg.arn
+  }
+  tags = merge(
+    var.tags,
+    {
+      Name = "${local.alb_name}-service-listener"
+    }
+  )
+}
+resource "aws_lb_listener" "nginx_http_test" {
+  load_balancer_arn = aws_lb.nginx.arn
+  port = 81
+  protocol = "HTTP"
+  default_action {
+    type = "forward"
+    target_group_arn = aws_alb_target_group.alb_http_test_tg.arn
+  }
+  tags = merge(
+    var.tags,
+    {
+      Name = "${local.alb_name}-test-listener"
     }
   )
 }
