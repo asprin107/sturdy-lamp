@@ -1,6 +1,7 @@
 locals {
-  profile = replace(var.TFC_WORKSPACE_NAME, "nginx_poc_", "")
-  rule    = yamldecode(file("./resources/rule.yaml"))
+  profile       = replace(var.TFC_WORKSPACE_NAME, "nginx_poc_", "")
+  rule          = yamldecode(file("./resources/rule.yaml"))
+  container_def = file("./resources/nginx-container-definition.json")
 }
 
 module "network" {
@@ -19,4 +20,5 @@ module "service_ecs" {
 
   alb_subnet_ids = [for v in module.network.subnets_public : v.id]
   alb_sg_rules   = local.rule.security_group.nginx-alb
+  container_def  = local.container_def
 }

@@ -18,7 +18,7 @@ resource "aws_alb_target_group" "alb_http_test_tg" {
 }
 
 resource "aws_lb" "nginx" {
-  depends_on = [aws_s3_bucket_policy.alb_access]
+  depends_on                 = [aws_s3_bucket_policy.alb_access]
   load_balancer_type         = "application"
   internal                   = false
   name                       = local.alb_name
@@ -45,10 +45,10 @@ resource "aws_lb" "nginx" {
 
 resource "aws_lb_listener" "nginx_http" {
   load_balancer_arn = aws_lb.nginx.arn
-  port = 80
-  protocol = "HTTP"
+  port              = 80
+  protocol          = "HTTP"
   default_action {
-    type = "forward"
+    type             = "forward"
     target_group_arn = aws_alb_target_group.alb_http_service_tg.arn
   }
   tags = merge(
@@ -59,10 +59,10 @@ resource "aws_lb_listener" "nginx_http" {
 }
 resource "aws_lb_listener" "nginx_http_test" {
   load_balancer_arn = aws_lb.nginx.arn
-  port = 81
-  protocol = "HTTP"
+  port              = 81
+  protocol          = "HTTP"
   default_action {
-    type = "forward"
+    type             = "forward"
     target_group_arn = aws_alb_target_group.alb_http_test_tg.arn
   }
   tags = merge(

@@ -1,5 +1,5 @@
 data "aws_elb_service_account" "aws_elb" {
-#  region = var.region # default region same as provider.
+  #  region = var.region # default region same as provider.
 }
 
 data "aws_caller_identity" "current" {}
@@ -10,9 +10,9 @@ data "aws_iam_policy_document" "alb_access_s3" {
       type        = "AWS"
       identifiers = ["arn:aws:iam::${data.aws_elb_service_account.aws_elb.id}:root"]
     }
-    effect = "Allow"
+    effect    = "Allow"
     resources = ["arn:aws:s3:::${aws_s3_bucket.alb_access_log.bucket}/${local.alb_name}/AWSLogs/${data.aws_caller_identity.current.account_id}/*"]
-    actions = ["s3:PutObject"]
+    actions   = ["s3:PutObject"]
   }
 
   statement {
@@ -20,9 +20,9 @@ data "aws_iam_policy_document" "alb_access_s3" {
       type        = "Service"
       identifiers = ["delivery.logs.amazonaws.com"]
     }
-    effect = "Allow"
+    effect    = "Allow"
     resources = ["arn:aws:s3:::${aws_s3_bucket.alb_access_log.bucket}/${local.alb_name}/AWSLogs/${data.aws_caller_identity.current.account_id}/*"]
-    actions = ["s3:PutObject"]
+    actions   = ["s3:PutObject"]
     condition {
       test     = "StringEquals"
       variable = "s3:x-amz-acl"
@@ -35,8 +35,20 @@ data "aws_iam_policy_document" "alb_access_s3" {
       type        = "Service"
       identifiers = ["delivery.logs.amazonaws.com"]
     }
-    effect = "Allow"
+    effect    = "Allow"
     resources = ["arn:aws:s3:::${aws_s3_bucket.alb_access_log.bucket}"]
-    actions = ["s3:GetBucketAcl"]
+    actions   = ["s3:GetBucketAcl"]
+  }
+}
+
+
+data "aws_iam_policy_document" "ecs_task_sts" {
+  statement {
+    principals {
+      type        = "Service"
+      identifiers = ["ecs-tasks.amazonaws.com"]
+    }
+    actions = ["sts:AssumeRole"]
+    effect  = "Allow"
   }
 }

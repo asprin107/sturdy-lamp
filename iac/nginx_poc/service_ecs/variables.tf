@@ -22,3 +22,7 @@ variable "alb_sg_rules" {
     type      = string
   }))
 }
+
+variable "container_def" {
+  description = "ECS Task Container Definition."
+}

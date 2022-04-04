@@ -1,0 +1,37 @@
+[
+  {
+    "name": "nginx",
+    "image":"nginx:1.21.6",
+    "cpu": 1024,
+    "memory": 2048,
+    "memoryReservation": 1024,
+    "disableNetworking": false,
+    "essential": true,
+    "healthCheck": {
+      "command": ["CMD-SHELL", "curl -f http://localhost/ || exit 1"],
+      "startPeriod": 30,
+      "interval": 30,
+      "retries": 3,
+      "timeout": 5
+    },
+    "interactive": false,
+    "privileged": true,
+    "pseudoTerminal": false,
+    "startTimeout": 120,
+    "stopTimeout": 120,
+    "user": "root:root",
+    "portMappings": [
+      {
+        "containerPort":80,
+        "protocol": "tcp"
+      }
+    ],
+    "ulimits": [
+      {
+        "name": "nofile",
+        "softLimit": 16384,
+        "hardLimit": 65536
+      }
+    ]
+  }
+]
