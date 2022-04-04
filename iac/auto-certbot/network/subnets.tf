@@ -19,7 +19,6 @@ resource "aws_subnet" "subnets_public" {
   availability_zone = "${var.rule.network.region}${var.rule.network.subnets.available_zones[count.index % length(var.rule.network.subnets.available_zones)]}"
   vpc_id            = aws_vpc.main.id
   tags = merge(
-    var.tags,
     {
       Name = "${var.project_name}-pub-sbn-${var.rule.network.subnets.available_zones[count.index % length(var.rule.network.subnets.available_zones)]}"
     }

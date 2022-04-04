@@ -19,4 +19,9 @@ terraform {
 provider "aws" {
   region = local.rule.network.region
   #  profile = var.profile
+  default_tags {
+    Owner   = "Kim, Youngsun"
+    Email   = "tortoise@lguplus.co.kr"
+    Account = local.profile
+  }
 }

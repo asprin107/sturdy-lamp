@@ -1,7 +1,6 @@
 resource "aws_internet_gateway" "main" {
   vpc_id = aws_vpc.main.id
   tags = merge(
-    var.tags,
     {
       Name = "${var.project_name}-igw"
     }
@@ -15,7 +14,6 @@ resource "aws_nat_gateway" "main" {
   allocation_id     = aws_eip.nat_ip[count.index].id
 
   tags = merge(
-    var.tags,
     {
       Name = "${var.project_name}-ngw"
     }
@@ -28,7 +26,6 @@ resource "aws_eip" "nat_ip" {
   count = length(aws_subnet.subnets_private)
   vpc   = true
   tags = merge(
-    var.tags,
     {
       Name = "${var.project_name}-nat-eip"
     }

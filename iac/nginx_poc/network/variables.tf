@@ -6,8 +6,3 @@ variable "project_name" {
 variable "rule" {
   description = "Network creation rule."
 }
-
-variable "tags" {
-  description = "default tags."
-  type        = object({})
-}

@@ -22,8 +22,3 @@ variable "alb_sg_rules" {
     type      = string
   }))
 }
-
-variable "tags" {
-  description = "Default tags."
-  type        = object({})
-}

@@ -37,7 +37,6 @@ resource "aws_lb" "nginx" {
   desync_mitigation_mode     = "defensive" # HTTP desync attack. https://docs.aws.amazon.com/elasticloadbalancing/latest/application/application-load-balancers.html#desync-mitigation-mode
 
   tags = merge(
-    var.tags,
     {
       Name = local.alb_name
     }
@@ -53,7 +52,6 @@ resource "aws_lb_listener" "nginx_http" {
     target_group_arn = aws_alb_target_group.alb_http_service_tg.arn
   }
   tags = merge(
-    var.tags,
     {
       Name = "${local.alb_name}-service-listener"
     }
@@ -68,7 +66,6 @@ resource "aws_lb_listener" "nginx_http_test" {
     target_group_arn = aws_alb_target_group.alb_http_test_tg.arn
   }
   tags = merge(
-    var.tags,
     {
       Name = "${local.alb_name}-test-listener"
     }
