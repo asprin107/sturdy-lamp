@@ -42,13 +42,55 @@ data "aws_iam_policy_document" "alb_access_s3" {
 }
 
 
-data "aws_iam_policy_document" "ecs_task_sts" {
+data "aws_iam_policy_document" "task_execution_trust" {
   statement {
     principals {
       type        = "Service"
       identifiers = ["ecs-tasks.amazonaws.com"]
     }
-    actions = ["sts:AssumeRole"]
-    effect  = "Allow"
+    actions = [
+      "sts:AssumeRole"
+    ]
+    effect = "Allow"
+  }
+}
+
+data "aws_iam_policy_document" "task_execution_permissions" {
+  statement {
+    actions = [
+      "ecr:GetAuthorizationToken",
+      "ecr:BatchCheckLayerAvailability",
+      "ecr:GetDownloadUrlForLayer",
+      "ecr:BatchGetImage",
+      "logs:CreateLogStream",
+      "logs:PutLogEvents"
+    ]
+    effect    = "Allow"
+    resources = ["*"]
+  }
+}
+
+
+data "aws_iam_policy_document" "nginx_task_trust" {
+  statement {
+    principals {
+      identifiers = ["ec2.amazonaws.com"]
+      type        = "Service"
+    }
+    actions = [
+      "sts:AssumeRole"
+    ]
+    effect = "Allow"
+  }
+}
+
+data "aws_iam_policy_document" "nginx_task_permissions" {
+  statement {
+    actions = [
+      "s3:PutObject",
+      "s3:GetObject"
+    ]
+    effect    = "Allow"
+    resources = ["arn:aws:s3:::${aws_s3_bucket.alb_access_log.bucket}/*"]
   }
 }

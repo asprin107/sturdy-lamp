@@ -15,7 +15,7 @@
       "timeout": 5
     },
     "interactive": false,
-    "privileged": true,
+    "privileged": false,
     "pseudoTerminal": false,
     "startTimeout": 120,
     "stopTimeout": 120,

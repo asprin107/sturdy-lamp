@@ -12,7 +12,7 @@ resource "aws_alb_target_group" "alb_http_service_tg" {
 resource "aws_alb_target_group" "alb_http_test_tg" {
   vpc_id      = var.main_vpc_id
   name        = "${local.alb_name}-test"
-  port        = 81
+  port        = 80
   protocol    = "HTTP"
   target_type = "ip"
 }

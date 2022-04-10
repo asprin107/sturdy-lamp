@@ -21,4 +21,6 @@ module "service_ecs" {
   alb_subnet_ids = [for v in module.network.subnets_public : v.id]
   alb_sg_rules   = local.rule.security_group.nginx-alb
   container_def  = local.container_def
+
+  ecs_subnet_ids = [for v in module.network.subnets_private : v.id]
 }

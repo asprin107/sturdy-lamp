@@ -26,3 +26,8 @@ variable "alb_sg_rules" {
 variable "container_def" {
   description = "ECS Task Container Definition."
 }
+
+variable "ecs_subnet_ids" {
+  description = "Subnet list placed ecs task."
+  type        = list(string)
+}

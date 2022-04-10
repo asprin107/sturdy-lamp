@@ -35,8 +35,8 @@ resource "aws_ecs_task_definition" "nginx" {
 
   requires_compatibilities = ["FARGATE"]
   network_mode             = "awsvpc"
-  ipc_mode                 = "task"
-  pid_mode                 = "task"
+  #  ipc_mode                 = "task" # does't support for Fargate
+  #  pid_mode                 = "task" # does't support for Fargate
 
   task_role_arn      = aws_iam_role.nginx_task.arn
   execution_role_arn = aws_iam_role.nginx_task_execution.arn
@@ -48,5 +48,29 @@ resource "aws_ecs_task_definition" "nginx" {
 
   ephemeral_storage {
     size_in_gib = 21
+  }
+}
+
+resource "aws_ecs_service" "nginx_service" {
+  name    = "ecs-nginx"
+  cluster = aws_ecs_cluster.main.arn
+  deployment_controller {
+    type = "CODE_DEPLOY"
+  }
+
+  load_balancer { # Service target group : 80 port
+    target_group_arn = aws_alb_target_group.alb_http_service_tg.arn
+    container_name   = "nginx"
+    container_port   = 80
+  }
+  load_balancer { # Test target group : 81 port
+    target_group_arn = aws_alb_target_group.alb_http_test_tg.arn
+    container_name   = "nginx"
+    container_port   = 80
+  }
+
+  network_configuration {
+    subnets         = var.ecs_subnet_ids
+    security_groups = [aws_security_group.ecs_nginx_sg.id]
   }
 }

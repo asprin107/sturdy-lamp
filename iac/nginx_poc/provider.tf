@@ -21,7 +21,7 @@ provider "aws" {
   #  profile = var.profile
   default_tags {
     tags = {
-      Owner   = "Kim, Youngsun"
+      Owner   = "Youngsun Kim"
       Email   = "tortoise@lguplus.co.kr"
       Account = local.profile
     }
