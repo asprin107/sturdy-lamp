@@ -1,0 +1,36 @@
+network:
+  host_cidr: "10.0.0.0/16"
+  subnets:
+    newbits: 6
+    available_zones:
+      - a
+      - c
+    pub:
+      amount: 2
+      max: 20
+    prv:
+      amount: 2
+      max: 44
+
+security_group:
+  nginx-alb:
+    http-service-in:
+      protocol: "tcp"
+      from_port: 80
+      to_port: 80
+      type: "ingress"
+    http-test-in:
+      protocol: "tcp"
+      from_port: 81
+      to_port: 81
+      type: "ingress"
+    all-out:
+      protocol: "all"
+      from_port: 0
+      to_port: 0
+      type: "egress"
+
+# Standard Hostnum : 16
+# pub.max + prv.max == 2^newbits // 4:16 / 6:64 / 8:256 /
+# pub.amount <= pub.max
+# prv.amount <= prv.max
