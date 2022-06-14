@@ -1,0 +1,36 @@
+name: Deploy to EFS
+on:
+  push:
+    branches:
+      - develop
+jobs:
+  Deploy-to-EFS:
+    runs-on: [self-hosted, linux, ec2-runner-dev]
+    environment: develop
+    steps:
+      - run: echo "This runner have to EC2 profile to can run CodeBuild. If not, Run CodeBuild Command will failed."
+      - name: AWS Configuration
+        run: |
+          echo "Set AWS Source Profile"
+          aws configure set region ${{ secrets.AWS_REGION }} --profile ${{ secrets.AWS_PROFILE }}
+          aws configure set role_arn ${{ secrets.AWS_ASSUME_ROLE_ARN }} --profile ${{ secrets.AWS_PROFILE }}
+          aws configure set output json --profile ${{ secrets.AWS_PROFILE }}
+          aws configure set credential_source Ec2InstanceMetadata --profile ${{ secrets.AWS_PROFILE }}
+      - name: Run CodeBuild for Deploy to EFS
+        run: |
+          export CODEBUILD_ID=$(aws codebuild start-build --project-name ${{ secrets.AWS_CODEBUILD_PROJECT_NAME }} --profile ${{ secrets.AWS_PROFILE }} | jq -r ".build.id")
+          echo "CodeBuild ID : $CODEBUILD_ID"
+          echo "CODEBUILD_ID=$CODEBUILD_ID" >> $GITHUB_ENV
+      - name: CodeBuild Status Check every 5 seconds until finished
+        run: |
+          export CODEBUILD_STATUS=$(aws codebuild batch-get-builds --ids ${{ env.CODEBUILD_ID }} --profile ${{ secrets.AWS_PROFILE }} | jq -r ".builds[].buildStatus")
+          while [ $CODEBUILD_STATUS = "IN_PROGRESS" ]; do CODEBUILD_STATUS=$(aws codebuild batch-get-builds --ids ${{ env.CODEBUILD_ID }} --profile ${{ secrets.AWS_PROFILE }} | jq -r ".builds[].buildStatus"); echo "CodeBuild Status : $CODEBUILD_STATUS"; sleep 5; done
+          echo "CODEBUILD_STATUS=$CODEBUILD_STATUS" >> $GITHUB_ENV
+      - name: CodeBuild Result
+        run: |
+          echo "CodeBuild Status : ${{ env.CODEBUILD_STATUS }}"
+          if [ ${{ env.CODEBUILD_STATUS }} = "SUCCEEDED" ]; then echo "CodeBuild finished successfully."; else echo "CodeBuild Run Failed with error state \"${{ env.CODEBUILD_STATUS }}\""; exit 1; fi;
+      - name: Clear Github runner
+        run: |
+          echo "aws configure remove command must be added here."
+      - run: echo "🍏 This job's status is ${{ job.status }}."
