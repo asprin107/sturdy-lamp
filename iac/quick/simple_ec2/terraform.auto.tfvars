@@ -1,5 +1,5 @@
 profile = "bmt"
-region = "ap-southeast-2"
+region  = "ap-southeast-2"
 
 # Amazon Linux 2 AMI (HVM) - Kernel 5.10
 ami = {

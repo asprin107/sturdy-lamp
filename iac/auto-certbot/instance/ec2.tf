@@ -29,6 +29,6 @@ resource "aws_network_interface" "certbot-apache" {
 }
 
 resource "aws_eip_association" "certbot_ec2_ip" {
-  instance_id = aws_instance.certbot-apache.id
+  instance_id   = aws_instance.certbot-apache.id
   allocation_id = var.eip_id
 }
