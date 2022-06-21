@@ -3,7 +3,7 @@ variable "ec2_pub_key" {
   type        = string
 }
 
-variable "project_name" {
-  description = "project name."
+variable "key_name" {
+  description = "key name."
   type        = string
 }
