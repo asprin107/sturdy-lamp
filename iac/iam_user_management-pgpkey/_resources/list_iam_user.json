@@ -1,0 +1,30 @@
+[
+  {
+    "realname": "User_A",
+    "id": "user_A@email.address",
+    "org": "org1",
+    "permission_set": [
+      "arn:aws:iam::aws:policy/AdministratorAccess"
+    ],
+    "ip_restriction": {
+      "personal_ips": []
+    },
+    "permission_type": {
+      "bmt": "admin",
+      "dev": "admin"
+    }
+  },
+  {
+    "realname": "User_B",
+    "id": "user_B@email.address",
+    "org": "org2",
+    "permission_set": [],
+    "ip_restriction": {
+      "personal_ips": []
+    },
+    "permission_type": {
+      "bmt": "develop",
+      "dev": "readonly"
+    }
+  }
+]
