@@ -8,6 +8,11 @@ variable "region" {
   type        = string
 }
 
+variable "tags" {
+  description = "tags"
+  type        = object({})
+}
+
 variable "rule" {
   description = "Network creation rule."
   type = object({
@@ -21,4 +26,15 @@ variable "rule" {
       })
     })
   })
+  default = {
+    host_cidr = "10.0.0.0/16"
+    subnets = {
+      newbits         = 6
+      available_zones = ["a", "c"]
+      pub = {
+        amount = 2
+        max    = 20
+      }
+    }
+  }
 }
