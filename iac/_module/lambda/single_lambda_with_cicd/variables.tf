@@ -33,18 +33,9 @@ variable "handler" {
   default = "lambda_function.lambda_handler" # AWS lambda python default handler. it means the function name of lambda_handler in lambda_function.py in
 }
 
-variable "lambda_svc_policy_json" {
+variable "lambda_svc_policy" {
   description = "iam policy json associated to iam role"
-  type = object({
-    statement = object({
-      principals = object({
-        identifiers = list(string)
-        type        = string
-      })
-      effect  = string
-      actions = list(string)
-    })
-  })
+  type = string
 }
 
 

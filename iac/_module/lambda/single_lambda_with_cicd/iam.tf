@@ -10,5 +10,5 @@ resource "aws_iam_role_policy_attachment" "lambda_svc_policy" {
 
 resource "aws_iam_policy" "lambda_svc_policy" {
   name   = "iam-policy-${var.base_name}-lambda"
-  policy = var.lambda_svc_policy_json
+  policy = var.lambda_svc_policy
 }

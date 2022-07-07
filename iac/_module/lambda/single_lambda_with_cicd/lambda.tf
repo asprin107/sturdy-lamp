@@ -7,7 +7,7 @@ resource "aws_lambda_function" "lambda" {
 
   publish = false
 
-  architectures = "x86_64" # x86_64 or arm64
+  architectures = ["x86_64"] # x86_64 or arm64
   memory_size   = 256      # MB. default 128
 
   vpc_config {

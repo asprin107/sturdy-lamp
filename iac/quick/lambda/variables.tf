@@ -3,6 +3,11 @@ variable "region" {
   type        = string
 }
 
+variable "profile" {
+  description = "aws profile"
+  type        = string
+}
+
 ## module.tags
 variable "project" {
   description = "Project name (Main category)"
