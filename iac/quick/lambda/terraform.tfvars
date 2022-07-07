@@ -1,4 +1,4 @@
 aws_account = "bmt"
-project     = "test"
+project     = "lmd-cicd"
 env         = "poc"
-service     = "lmd-cicd"
+service     = "sample"
