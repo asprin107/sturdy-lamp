@@ -9,11 +9,6 @@ variable "security_group_ids" {
   type        = list(string)
 }
 
-variable "role_arn" {
-  description = "iam role arn for lambda function."
-  type        = string
-}
-
 variable "lambda_description" {
   description = "description for lambda function"
   type        = string
