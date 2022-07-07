@@ -5,7 +5,7 @@ module "lambda" {
   lambda_description     = "This lambda for test"
   lambda_svc_policy_json = data.aws_iam_policy_document.lambda_svc_policy.json
   security_group_ids     = []
-  subnet_ids             = []
+  subnet_ids             = [for v in module.network.list_public_subnet : v.id]
 
   tags = module.tags.tags
 }
