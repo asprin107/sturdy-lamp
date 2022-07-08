@@ -35,7 +35,7 @@ variable "handler" {
 
 variable "lambda_svc_policy" {
   description = "iam policy json associated to iam role"
-  type = string
+  type        = string
 }
 
 

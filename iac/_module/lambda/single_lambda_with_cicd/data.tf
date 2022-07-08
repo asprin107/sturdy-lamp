@@ -1,7 +1,7 @@
 data "aws_iam_policy_document" "lambda_env_kms" {
   statement {
     sid    = "AllowUseOfTheKey"
-    effect = "allow"
+    effect = "Allow"
     principals {
       identifiers = ["lambda.amazonaws.com"]
       type        = "Service"
@@ -18,7 +18,7 @@ data "aws_iam_policy_document" "lambda_env_kms" {
 
   statement {
     sid    = "EnableIAMpolicies"
-    effect = "allow"
+    effect = "Allow"
     principals {
       identifiers = ["arn:aws:iam::${data.aws_caller_identity.current.account_id}:root"]
       type        = "AWS"
