@@ -44,6 +44,7 @@ resource "aws_lambda_function" "lambda" {
   #  }
 
   # Source from
+  filename = null
   #  package_type = "ZIP"       # ZIP or Image
   #  s3_bucket         = aws_s3_bucket.lambda_source_archive.bucket
   #  s3_key            = var.source_path == "" ? var.source_file : "${var.source_path}/${var.source_file}"

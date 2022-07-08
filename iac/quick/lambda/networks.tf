@@ -14,15 +14,15 @@ module "security_group" {
   list_sg_rule = [
     {
       protocol    = "tcp"
-      from_port   = -1
-      to_port     = -1
+      from_port   = 0
+      to_port     = 0
       type        = "ingress"
       cidr_blocks = ["0.0.0.0/0"]
     },
     {
       protocol    = "tcp"
-      from_port   = -1
-      to_port     = -1
+      from_port   = 0
+      to_port     = 0
       type        = "egress"
       cidr_blocks = ["0.0.0.0/0"]
     }
