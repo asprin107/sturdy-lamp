@@ -28,4 +28,6 @@ module "security_group" {
     }
   ]
   sg_description = "allow all for test"
+
+  tags = module.tags.tags
 }
