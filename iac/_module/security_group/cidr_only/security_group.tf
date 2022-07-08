@@ -1,7 +1,13 @@
 resource "aws_security_group" "sg" {
   vpc_id      = var.vpc_id
-  name        = "sg-${var.project_name}"
+  name        = "${var.project_name}-sg"
   description = var.sg_description
+  tags = merge(
+    var.tags,
+    {
+      Name = "sg-${var.project_name}"
+    }
+  )
 }
 
 # protocol, from_port, to_port, type, cidr_blocks
