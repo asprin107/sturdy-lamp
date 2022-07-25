@@ -1,5 +1,5 @@
 resource "aws_instance" "service_ec2" {
-  ami           = var.ami.ami_x86
+  ami           = var.ami
   instance_type = var.instance_type
   key_name      = var.key_name
 
@@ -10,11 +10,11 @@ resource "aws_instance" "service_ec2" {
 
   ebs_block_device {
     device_name = "/dev/xvda"
-    volume_size = "20"
+    volume_size = var.root_volume_size
     volume_type = "gp2"
   }
 
-  iam_instance_profile = var.instance_profile_name
+  iam_instance_profile = var.instance_profile_name != null ? var.instance_profile_name : ""
 
   tags = {
     Name = "${var.project_name}-${var.subject_name}"

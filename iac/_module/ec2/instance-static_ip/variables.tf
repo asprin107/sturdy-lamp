@@ -6,13 +6,18 @@ variable "instance_type" {
 variable "instance_profile_name" {
   description = "ec2 instance profile name"
   type        = string
+  default     = null
+}
+
+variable "root_volume_size" {
+  description = "root volume size (GB)"
+  type        = string
+  default     = "20"
 }
 
 variable "ami" {
   description = "amazon machine iamge"
-  type = object({
-    ami_x86 = string
-  })
+  type        = string
 }
 
 variable "project_name" {
