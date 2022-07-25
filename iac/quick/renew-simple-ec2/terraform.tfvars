@@ -1,0 +1,6 @@
+aws_account  = "bmt"
+project      = "simple-ec2"
+env          = "poc"
+service      = "practice"
+region       = "ap-northeast-1"
+ec2-key-name = "simple-ec2"
