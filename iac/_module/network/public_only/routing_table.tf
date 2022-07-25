@@ -4,7 +4,7 @@ resource "aws_route_table" "public" {
   tags = merge(
     var.tags,
     {
-    Name = "rt-${var.project_name}"
+      Name = "rt-${var.project_name}"
     }
   )
 }
