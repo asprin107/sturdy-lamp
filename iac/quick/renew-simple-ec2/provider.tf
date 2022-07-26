@@ -21,7 +21,6 @@ terraform {
 
 provider "aws" {
   region  = var.region
-  profile = "bmt"
 }
 
 provider "tls" {
