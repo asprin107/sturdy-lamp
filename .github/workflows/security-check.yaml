@@ -1,0 +1,25 @@
+name: Security Check
+on: [push]
+jobs:
+  Security-Check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Install git secrets
+        uses: actions/checkout@v3
+        with:
+          repository: awslabs/git-secrets
+          path: git-secrets
+      - name: Build git secrets
+        run: |
+          cd git-secrets
+          sudo make install
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+          token: ${{ secrets.github_token }}
+      - name: AWS Security scan
+        run: |
+          pwd
+          git secrets --register-aws
+          git secrets --scan -r
+      - run: echo "🍏 This job's status is ${{ job.status }}."
