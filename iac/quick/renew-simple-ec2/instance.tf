@@ -10,5 +10,7 @@ module "ec2" {
   subnet_id        = module.network.list_public_subnet[0].id
   root_volume_size = "50"
 
+  user_data_base64 = base64encode(file("./ec2_init.sh"))
+
   depends_on = [module.ec2-key]
 }
