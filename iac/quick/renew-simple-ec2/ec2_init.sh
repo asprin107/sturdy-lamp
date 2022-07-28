@@ -1,5 +1,7 @@
 #!/bin/bash
 
+USER="ec2-user"
+
 # KUBECTL
 ## Download kubectl
 curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
@@ -16,7 +18,7 @@ mv ./kubectl /usr/local/bin/kubectl
 sudo yum update -y
 sudo yum install docker -y
 ## Grant Docker to user
-sudo usermod -aG docker ec2-user
+sudo usermod -aG docker ${USER}
 newgrp docker
 ## Docker daemon setting
 sudo systemctl enable docker
@@ -28,4 +30,8 @@ sudo systemctl start docker
 curl -LO https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64
 ## Install minikube
 sudo install minikube-linux-amd64 /usr/bin/minikube
-su ec2-user -c 'minikube start'
+su ${USER} -c 'minikube start'
+
+
+# HELM
+su ${USER} -c 'curl https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | bash'
