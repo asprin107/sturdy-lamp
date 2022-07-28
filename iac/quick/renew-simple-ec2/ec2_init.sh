@@ -1,6 +1,7 @@
 #!/bin/bash
 
 USER="ec2-user"
+SERVER_IP=$(curl ipinfo.io/ip)
 
 # KUBECTL
 ## Download kubectl
@@ -30,7 +31,7 @@ sudo systemctl start docker
 curl -LO https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64
 ## Install minikube
 sudo install minikube-linux-amd64 /usr/bin/minikube
-su ${USER} -c 'minikube start'
+su ${USER} -c "minikube start --apiserver-ips=${SERVER_IP} --listen-address=0.0.0.0"
 
 
 # HELM
