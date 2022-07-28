@@ -44,3 +44,9 @@ variable "list_sg" {
   description = "list security group attached to ec2"
   type        = list(string)
 }
+
+variable "user_data_base64" {
+  description = "ec2 user data for launch instance encoded with base64"
+  type        = string
+  default     = null
+}

@@ -16,6 +16,8 @@ resource "aws_instance" "service_ec2" {
 
   iam_instance_profile = var.instance_profile_name != null ? var.instance_profile_name : ""
 
+  user_data_base64 = var.user_data_base64
+
   tags = {
     Name = "${var.project_name}-${var.subject_name}"
   }
