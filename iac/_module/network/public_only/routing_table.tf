@@ -1,6 +1,12 @@
 ### Public
 resource "aws_route_table" "public" {
   vpc_id = aws_vpc.main.id
+  tags = merge(
+    var.tags,
+    {
+      Name = "rt-${var.project_name}"
+    }
+  )
 }
 resource "aws_route_table_association" "public" {
   count          = length(aws_subnet.subnets_public)

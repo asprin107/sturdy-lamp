@@ -23,3 +23,8 @@ variable "sg_description" {
   description = "description for security group"
   type        = string
 }
+
+variable "tags" {
+  description = "tags"
+  type        = object({})
+}

@@ -13,14 +13,14 @@ module "security_group" {
   project_name = var.project
   list_sg_rule = [
     {
-      protocol    = "tcp"
+      protocol    = "all"
       from_port   = 0
       to_port     = 0
       type        = "ingress"
       cidr_blocks = ["0.0.0.0/0"]
     },
     {
-      protocol    = "tcp"
+      protocol    = "all"
       from_port   = 0
       to_port     = 0
       type        = "egress"

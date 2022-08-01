@@ -8,7 +8,7 @@ resource "aws_lambda_function" "lambda" {
   publish = false
 
   architectures = ["x86_64"] # x86_64 or arm64
-  memory_size   = 256      # MB. default 128
+  memory_size   = 256        # MB. default 128
 
   vpc_config {
     security_group_ids = var.security_group_ids
@@ -44,6 +44,7 @@ resource "aws_lambda_function" "lambda" {
   #  }
 
   # Source from
+  filename = null
   #  package_type = "ZIP"       # ZIP or Image
   #  s3_bucket         = aws_s3_bucket.lambda_source_archive.bucket
   #  s3_key            = var.source_path == "" ? var.source_file : "${var.source_path}/${var.source_file}"
