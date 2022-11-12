@@ -1,4 +1,11 @@
 terraform {
+  backend "s3" {
+    bucket = "lamp-bmt-tfstate"
+    key    = "lamp-bmt-tfstate/network/pub-only/terraform.tfstate"
+    region = "ap-northeast-1"
+    profile = "bmt"
+  }
+
   required_providers {
     aws = {
       source  = "hashicorp/aws"
