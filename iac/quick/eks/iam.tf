@@ -35,3 +35,10 @@ resource "aws_iam_role_policy_attachment" "eks-node-ecr-policy" {
   policy_arn = "arn:aws:iam::aws:policy/AmazonEC2ContainerRegistryReadOnly"
   role       = aws_iam_role.eks_node.name
 }
+
+
+# EKS IRSA for aws-loadbalancer-controller
+resource "aws_iam_policy" "irsa-loadbalancer-controller" {
+  name = "${var.project}-${var.service}-${var.env}-eks-irsa-loadbalancer-controller"
+  policy = jsondecode(file("../../_resources/lamp-bmt/policy-irsa-loadbalancer-controller.json"))
+}
