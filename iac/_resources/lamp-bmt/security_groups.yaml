@@ -1,0 +1,49 @@
+basic:
+  description: "Basic security group for test."
+  rules:
+    - type: "ingress"
+      description: "Allow HTTP access"
+      protocol: "tcp"
+      from_port: 80
+      to_port: 80
+      cidr_blocks: ["0.0.0.0/0"]
+    - type: "ingress"
+      description: "Allow HTTPS access."
+      protocol: "tcp"
+      from_port: 443
+      to_port: 443
+      cidr_blocks: ["0.0.0.0/0"]
+    - type: "egress"
+      description: "Egress All."
+      protocol: "all"
+      from_port: 0
+      to_port: 0
+      cidr_blocks: ["0.0.0.0/0"]
+
+eks-cluster:
+  description: "EKS cluster sg."
+  rules:
+    - type: "ingress"
+      description: "Allow HTTP access"
+      protocol: "tcp"
+      from_port: 80
+      to_port: 80
+      cidr_blocks: [ "0.0.0.0/0" ]
+    - type: "ingress"
+      description: "Allow HTTPS access."
+      protocol: "tcp"
+      from_port: 443
+      to_port: 443
+      cidr_blocks: [ "0.0.0.0/0" ]
+    - type: "ingress"
+      description: "Allow All inner traffic"
+      protocol: "all"
+      from_port: 0
+      to_port: 0
+      cidr_blocks: [ "172.16.0.0/12" ]
+    - type: "egress"
+      description: "Egress All."
+      protocol: "all"
+      from_port: 0
+      to_port: 0
+      cidr_blocks: [ "0.0.0.0/0" ]

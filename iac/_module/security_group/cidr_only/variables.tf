@@ -3,14 +3,15 @@ variable "vpc_id" {
   type        = string
 }
 
-variable "project_name" {
-  description = "project name"
+variable "security_group_name" {
+  description = "security group name."
   type        = string
 }
 
 variable "list_sg_rule" {
   description = "list security group rule"
   type = list(object({
+    description = string
     protocol    = string
     from_port   = number
     to_port     = number
