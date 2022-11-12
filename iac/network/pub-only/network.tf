@@ -4,5 +4,7 @@ module "network" {
   project_name = var.project
   region       = var.region
 
+  map_public_ip_on_launch = true
+
   tags = module.default_tags.tags
 }

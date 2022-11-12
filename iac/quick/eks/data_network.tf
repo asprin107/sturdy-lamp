@@ -18,3 +18,10 @@ data "aws_security_groups" "eks_cluster" {
     values = ["sg-eks-cluster"]
   }
 }
+
+data "aws_security_groups" "eks_node" {
+  filter {
+    name   = "tag:Name"
+    values = ["sg-eks-node"]
+  }
+}

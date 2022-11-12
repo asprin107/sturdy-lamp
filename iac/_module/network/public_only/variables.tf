@@ -13,6 +13,12 @@ variable "tags" {
   type        = object({})
 }
 
+variable "map_public_ip_on_launch" {
+  description = "Specify true to indicate that instances launched into the subnet should be assigned a public IP address."
+  default     = false
+  type        = bool
+}
+
 variable "rule" {
   description = "Network creation rule."
   type = object({
