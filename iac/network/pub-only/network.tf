@@ -6,5 +6,6 @@ module "network" {
 
   map_public_ip_on_launch = true
 
-  tags = module.default_tags.tags
+  tags     = module.default_tags.tags
+  eks_tags = module.eks_tags.tags
 }

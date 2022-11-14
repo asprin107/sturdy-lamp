@@ -6,3 +6,10 @@ module "default_tags" {
   project     = var.project
   service     = var.service
 }
+
+module "eks_tags" {
+  source = "../../_module/tags/eks"
+
+  eks_cluster_name  = "lamp-eks-test"
+  eks_node_sg_scope = "shared"
+}

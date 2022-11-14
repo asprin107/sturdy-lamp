@@ -20,6 +20,7 @@ resource "aws_subnet" "subnets_public" {
     var.tags,
     {
       Name = "${var.project_name}-pub-sbn-${var.rule.subnets.available_zones[count.index % length(var.rule.subnets.available_zones)]}"
-    }
+    },
+    var.eks_tags != null ? var.eks_tags.sbn.pub : {}
   )
 }

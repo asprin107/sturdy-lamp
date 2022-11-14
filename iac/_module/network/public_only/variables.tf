@@ -13,6 +13,17 @@ variable "tags" {
   type        = object({})
 }
 
+variable "eks_tags" {
+  description = "tasg for EKS"
+  default     = null
+  type        = object({
+    sbn = object({
+      pub = any
+      prv = any
+    })
+  })
+}
+
 variable "map_public_ip_on_launch" {
   description = "Specify true to indicate that instances launched into the subnet should be assigned a public IP address."
   default     = false
