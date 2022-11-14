@@ -10,7 +10,7 @@ variable "region" {
 
 variable "tags" {
   description = "tags"
-  type        = object({})
+  type        = any
 }
 
 variable "eks_tags" {
