@@ -16,7 +16,7 @@ variable "tags" {
 variable "eks_tags" {
   description = "tasg for EKS"
   default     = null
-  type        = object({
+  type = object({
     sbn = object({
       pub = any
       prv = any
