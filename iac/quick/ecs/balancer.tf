@@ -1,7 +1,7 @@
 resource "aws_alb_target_group" "alb_http_service_tg" {
   vpc_id      = data.aws_vpc.main.id
   name        = "${local.alb_name}-service"
-  port        = 80
+  port        = 8080
   protocol    = "HTTP"
   target_type = "ip"
 
@@ -20,7 +20,7 @@ resource "aws_alb_target_group" "alb_http_service_tg" {
 resource "aws_alb_target_group" "alb_http_test_tg" {
   vpc_id      = data.aws_vpc.main.id
   name        = "${local.alb_name}-test"
-  port        = 80
+  port        = 8080
   protocol    = "HTTP"
   target_type = "ip"
 
@@ -63,7 +63,7 @@ resource "aws_lb" "ecs" {
   )
 }
 
-resource "aws_lb_listener" "nginx_http" {
+resource "aws_lb_listener" "http_service" {
   load_balancer_arn = aws_lb.ecs.arn
   port              = 80
   protocol          = "HTTP"
@@ -77,7 +77,7 @@ resource "aws_lb_listener" "nginx_http" {
     }
   )
 }
-resource "aws_lb_listener" "nginx_http_test" {
+resource "aws_lb_listener" "http_test" {
   load_balancer_arn = aws_lb.ecs.arn
   port              = 81
   protocol          = "HTTP"
