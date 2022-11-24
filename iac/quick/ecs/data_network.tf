@@ -18,3 +18,10 @@ data "aws_security_groups" "ecs" {
     values = ["sg-ecs-service"]
   }
 }
+
+data "aws_security_groups" "ecs-lb" {
+  filter {
+    name   = "tag:Name"
+    values = ["sg-ecs-lb"]
+  }
+}

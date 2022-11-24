@@ -6,6 +6,12 @@ resource "aws_ecs_service" "haegol" {
 
   desired_count = 1
 
+  load_balancer {
+    container_name   = "haegol"
+    container_port   = 8080
+    target_group_arn = aws_alb_target_group.alb_http_service_tg.arn
+  }
+
   deployment_controller {
     #   type = "CODE_DEPLOY"
     type = "ECS"
