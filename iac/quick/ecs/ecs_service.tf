@@ -13,13 +13,13 @@ resource "aws_ecs_service" "haegol" {
   }
 
   deployment_controller {
-    #   type = "CODE_DEPLOY"
-    type = "ECS"
+    type = "CODE_DEPLOY"
+    #    type = "ECS"
   }
-  deployment_circuit_breaker {
-    enable   = false
-    rollback = false
-  }
+  #  deployment_circuit_breaker {
+  #    enable   = false
+  #    rollback = false
+  #  }
 
   network_configuration {
     subnets          = data.aws_subnets.pub_subnets.ids
