@@ -76,6 +76,12 @@ resource "aws_lb_listener" "http_service" {
       Name = "${local.alb_name}-service-listener"
     }
   )
+
+  lifecycle {
+    ignore_changes = [
+      default_action # Target changed by CodeDeploy
+    ]
+  }
 }
 resource "aws_lb_listener" "http_test" {
   load_balancer_arn = aws_lb.ecs.arn
@@ -90,4 +96,10 @@ resource "aws_lb_listener" "http_test" {
       Name = "${local.alb_name}-test-listener"
     }
   )
+
+  lifecycle {
+    ignore_changes = [
+      default_action # Target changed by CodeDeploy
+    ]
+  }
 }

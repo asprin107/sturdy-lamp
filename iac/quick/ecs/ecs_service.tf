@@ -31,7 +31,7 @@ resource "aws_ecs_service" "haegol" {
   lifecycle {
     ignore_changes = [
       task_definition,
-      load_balancer
+      load_balancer # Target changed by CodeDeploy
     ]
   }
 }
