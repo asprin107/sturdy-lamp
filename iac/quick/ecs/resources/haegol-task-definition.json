@@ -1,0 +1,108 @@
+{
+  "family": "haegol",
+  "cpu": "2048",
+  "memory": "4096",
+  "requiresCompatibilities": [
+    "FARGATE"
+  ],
+  "networkMode": "awsvpc",
+  "runtimePlatform": {
+    "cpuArchitecture": "ARM64",
+    "operatingSystemFamily": "LINUX"
+  },
+  "ephemeralStorage": {
+    "sizeInGiB": 25
+  },
+  "taskRoleArn": "arn:aws:iam::142904692278:role/lamp-ecs-test-task_role",
+  "executionRoleArn": "arn:aws:iam::142904692278:role/lamp-ecs-test-task_execution_role",
+  "containerDefinitions": [
+    {
+      "name": "haegol",
+      "image": "142904692278.dkr.ecr.ap-northeast-1.amazonaws.com/lamp-ecs-test:1.0.1",
+      "cpu": 1024,
+      "memory": 2048,
+      "memoryReservation": 1024,
+      "disableNetworking": false,
+      "essential": true,
+      "interactive": false,
+      "privileged": false,
+      "pseudoTerminal": false,
+      "startTimeout": 120,
+      "stopTimeout": 120,
+      "user": "root:root",
+      "portMappings": [
+        {
+          "containerPort": 8080,
+          "protocol": "tcp"
+        }
+      ],
+      "ulimits": [
+        {
+          "name": "nofile",
+          "softLimit": 16384,
+          "hardLimit": 65536
+        }
+      ],
+      "logConfiguration": {
+        "logDriver": "awslogs",
+        "options": {
+          "awslogs-create-group": "true",
+          "awslogs-group": "awslogs-haegol",
+          "awslogs-region": "ap-northeast-1",
+          "awslogs-stream-prefix": "haegol"
+        }
+      }
+    },
+    {
+      "name": "postgres",
+      "image":"postgres:latest",
+      "cpu": 1024,
+      "memory": 2048,
+      "memoryReservation": 1024,
+      "disableNetworking": false,
+      "essential": false,
+      "interactive": false,
+      "privileged": false,
+      "pseudoTerminal": false,
+      "startTimeout": 120,
+      "stopTimeout": 120,
+      "user": "root:root",
+      "portMappings": [
+        {
+          "containerPort":5432,
+          "protocol": "tcp"
+        }
+      ],
+      "ulimits": [
+        {
+          "name": "nofile",
+          "softLimit": 16384,
+          "hardLimit": 65536
+        }
+      ],
+      "secrets": [
+        {
+          "name": "POSTGRES_USER",
+          "valueFrom": "arn:aws:secretsmanager:ap-northeast-1:142904692278:secret:lamp-ecs-test-sm2-PndzjV:POSTGRES_USER::"
+        },
+        {
+          "name": "POSTGRES_PASSWORD",
+          "valueFrom": "arn:aws:secretsmanager:ap-northeast-1:142904692278:secret:lamp-ecs-test-sm2-PndzjV:POSTGRES_PASSWORD::"
+        },
+        {
+          "name": "POSTGRES_DB",
+          "valueFrom": "arn:aws:secretsmanager:ap-northeast-1:142904692278:secret:lamp-ecs-test-sm2-PndzjV:POSTGRES_DB::"
+        }
+      ],
+      "logConfiguration": {
+        "logDriver": "awslogs",
+        "options": {
+          "awslogs-create-group": "true",
+          "awslogs-group": "awslogs-haegol-postgres",
+          "awslogs-region": "ap-northeast-1",
+          "awslogs-stream-prefix": "haegol-postgres"
+        }
+      }
+    }
+  ]
+}

@@ -19,17 +19,17 @@ resource "aws_ecs_cluster" "main" {
   tags = module.default_tags.tags
 }
 
-resource "aws_ecs_cluster_capacity_providers" "ecs_infra" {
-  cluster_name = aws_ecs_cluster.main.name
-
-  capacity_providers = ["FARGATE"]
-
-  default_capacity_provider_strategy {
-    base              = 0
-    weight            = 100
-    capacity_provider = "FARGATE"
-  }
-}
+#resource "aws_ecs_cluster_capacity_providers" "ecs_infra" {
+#  cluster_name = aws_ecs_cluster.main.name
+#
+#  capacity_providers = ["FARGATE"]
+#
+#  default_capacity_provider_strategy {
+#    base              = 0
+#    weight            = 100
+#    capacity_provider = "FARGATE"
+#  }
+#}
 
 #resource "aws_cloudwatch_log_group" "ecs_logs" {
 #  name = "ecs-logs-${local.naming_convention}"

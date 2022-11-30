@@ -1,6 +1,6 @@
-resource "aws_alb_target_group" "alb_http_service_tg" {
+resource "aws_alb_target_group" "alb_http_tg_1" {
   vpc_id      = data.aws_vpc.main.id
-  name        = "${local.alb_name}-service"
+  name        = "${local.alb_name}-tg-1"
   port        = 8080
   protocol    = "HTTP"
   target_type = "ip"
@@ -17,9 +17,9 @@ resource "aws_alb_target_group" "alb_http_service_tg" {
     matcher             = "200"
   }
 }
-resource "aws_alb_target_group" "alb_http_test_tg" {
+resource "aws_alb_target_group" "alb_http_tg_2" {
   vpc_id      = data.aws_vpc.main.id
-  name        = "${local.alb_name}-test"
+  name        = "${local.alb_name}-tg-2"
   port        = 8080
   protocol    = "HTTP"
   target_type = "ip"
@@ -69,7 +69,7 @@ resource "aws_lb_listener" "http_service" {
   protocol          = "HTTP"
   default_action {
     type             = "forward"
-    target_group_arn = aws_alb_target_group.alb_http_service_tg.arn
+    target_group_arn = aws_alb_target_group.alb_http_tg_1.arn
   }
   tags = merge(
     {
@@ -83,7 +83,7 @@ resource "aws_lb_listener" "http_test" {
   protocol          = "HTTP"
   default_action {
     type             = "forward"
-    target_group_arn = aws_alb_target_group.alb_http_test_tg.arn
+    target_group_arn = aws_alb_target_group.alb_http_tg_2.arn
   }
   tags = merge(
     {

@@ -11,14 +11,14 @@ resource "aws_codedeploy_deployment_group" "haegol" {
 
   load_balancer_info {
     target_group_pair_info {
+      target_group {
+        name = aws_alb_target_group.alb_http_tg_1.name
+      }
+      target_group {
+        name = aws_alb_target_group.alb_http_tg_2.name
+      }
       prod_traffic_route {
         listener_arns = [aws_lb_listener.http_service.arn]
-      }
-      target_group {
-        name = aws_alb_target_group.alb_http_service_tg.name
-      }
-      target_group {
-        name = aws_alb_target_group.alb_http_test_tg.name
       }
       test_traffic_route {
         listener_arns = [aws_lb_listener.http_test.arn]

@@ -4,17 +4,18 @@ resource "aws_ecs_service" "haegol" {
 
   task_definition = aws_ecs_task_definition.haegol.arn
 
+  launch_type = "FARGATE"
+
   desired_count = 1
 
   load_balancer {
     container_name   = "haegol"
     container_port   = 8080
-    target_group_arn = aws_alb_target_group.alb_http_service_tg.arn
+    target_group_arn = aws_alb_target_group.alb_http_tg_1.arn
   }
 
   deployment_controller {
-    type = "CODE_DEPLOY"
-    #    type = "ECS"
+    type = "CODE_DEPLOY" # ECS / CODE_DEPLOY
   }
   #  deployment_circuit_breaker {
   #    enable   = false
@@ -27,9 +28,10 @@ resource "aws_ecs_service" "haegol" {
     assign_public_ip = true
   }
 
-  capacity_provider_strategy {
-    capacity_provider = "FARGATE"
-    weight            = 100
-    base              = 0
+  lifecycle {
+    ignore_changes = [
+      task_definition,
+      load_balancer
+    ]
   }
 }

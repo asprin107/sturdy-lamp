@@ -21,4 +21,9 @@ resource "aws_ecs_task_definition" "haegol" {
   ephemeral_storage {
     size_in_gib = 25
   }
+
+  # NOTE only used for creation.
+  lifecycle {
+    create_before_destroy = true
+  }
 }
