@@ -1,15 +1,3 @@
-variable "name" {
-  description = "Name list associated to the service."
-  type = object({
-    project = string
-  })
-}
-
-variable "env" {
-  description = "System Environment Name."
-  type        = string
-}
-
 variable "purpose" {
   description = "Simple purpose to identify."
   type        = string

@@ -1,3 +1,3 @@
 locals {
-  naming_convention = "${var.name.project}-${var.env}"
+  naming_convention = "${var.tags.Project}-${var.tags.Environment}"
 }

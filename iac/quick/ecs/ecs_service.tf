@@ -15,12 +15,12 @@ resource "aws_ecs_service" "haegol" {
   }
 
   ordered_placement_strategy {
-    type = "spread" # random / spread / binpack
+    type  = "spread" # random / spread / binpack
     field = "attribute:ecs.availability-zone"
   }
 
   ordered_placement_strategy {
-    type = "spread"
+    type  = "spread"
     field = "instanceId"
   }
 
