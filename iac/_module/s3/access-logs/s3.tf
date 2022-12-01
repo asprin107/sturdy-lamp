@@ -8,8 +8,8 @@ resource "aws_s3_bucket_policy" "alb_access" {
 }
 
 resource "random_string" "s3-random-name" {
-  length           = 6
-  lower            = true
-  upper            = false
-  special          = false
+  length  = 6
+  lower   = true
+  upper   = false
+  special = false
 }

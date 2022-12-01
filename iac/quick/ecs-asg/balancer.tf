@@ -38,14 +38,13 @@ resource "aws_alb_target_group" "alb_http_tg_2" {
 }
 
 resource "aws_lb" "ecs" {
-  depends_on                 = [aws_s3_bucket_policy.alb_access]
   load_balancer_type         = "application"
   internal                   = false
   name                       = local.alb_name
   security_groups            = data.aws_security_groups.ecs-lb.ids
   drop_invalid_header_fields = false
   access_logs {
-    bucket  = aws_s3_bucket.alb_access_log.bucket
+    bucket  = data.terraform_remote_state.shared-resource.outputs.s3_access_logs
     prefix  = local.alb_name
     enabled = true
   }
