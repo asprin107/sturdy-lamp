@@ -1,5 +1,5 @@
 module "sg" {
-  source = "../../_module/security_group/cidr_only"
+  source = "../../../_module/security_group/cidr_only"
 
   for_each = local.list_sg
 

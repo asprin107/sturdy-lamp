@@ -1,5 +1,5 @@
 module "default_tags" {
-  source = "../../_module/tags"
+  source = "../../../_module/tags"
 
   aws_account = var.aws_account
   env         = var.env
@@ -8,7 +8,7 @@ module "default_tags" {
 }
 
 module "eks_tags" {
-  source = "../../_module/tags/eks"
+  source = "../../../_module/tags/eks"
 
   eks_cluster_name  = "lamp-eks-test"
   eks_node_sg_scope = "shared"

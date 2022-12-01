@@ -1,7 +1,7 @@
 terraform {
   backend "s3" {
     bucket  = "lamp-bmt-tfstate"
-    key     = "lamp-bmt-tfstate/network/pub-only/terraform.tfstate"
+    key     = "lamp-bmt-tfstate/base/network/pub-only/terraform.tfstate"
     region  = "ap-northeast-1"
     profile = "bmt"
   }
