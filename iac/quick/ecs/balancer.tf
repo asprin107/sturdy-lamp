@@ -51,7 +51,7 @@ resource "aws_lb" "ecs" {
   }
   subnets                    = data.aws_subnets.pub_subnets.ids
   idle_timeout               = 60
-  enable_deletion_protection = true
+  enable_deletion_protection = false
   enable_http2               = true
   ip_address_type            = "ipv4"      # Available value is "ipv4", "dualstack". dualstack means use ipv4 and ipv6
   desync_mitigation_mode     = "defensive" # HTTP desync attack. https://docs.aws.amazon.com/elasticloadbalancing/latest/application/application-load-balancers.html#desync-mitigation-mode
