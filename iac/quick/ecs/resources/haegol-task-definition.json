@@ -3,7 +3,8 @@
   "cpu": "2048",
   "memory": "4096",
   "requiresCompatibilities": [
-    "FARGATE"
+    "FARGATE",
+    "EC2"
   ],
   "networkMode": "awsvpc",
   "runtimePlatform": {
@@ -83,15 +84,15 @@
       "secrets": [
         {
           "name": "POSTGRES_USER",
-          "valueFrom": "arn:aws:secretsmanager:ap-northeast-1:142904692278:secret:lamp-ecs-test-sm2-PndzjV:POSTGRES_USER::"
+          "valueFrom": "arn:aws:secretsmanager:{REGION}:{ACCOUNT_ID}:secret:{SECRET_MANAGER_NAME}:POSTGRES_USER::"
         },
         {
           "name": "POSTGRES_PASSWORD",
-          "valueFrom": "arn:aws:secretsmanager:ap-northeast-1:142904692278:secret:lamp-ecs-test-sm2-PndzjV:POSTGRES_PASSWORD::"
+          "valueFrom": "arn:aws:secretsmanager:{REGION}:{ACCOUNT_ID}:secret:{SECRET_MANAGER_NAME}:POSTGRES_PASSWORD::"
         },
         {
           "name": "POSTGRES_DB",
-          "valueFrom": "arn:aws:secretsmanager:ap-northeast-1:142904692278:secret:lamp-ecs-test-sm2-PndzjV:POSTGRES_DB::"
+          "valueFrom": "arn:aws:secretsmanager:{REGION}:{ACCOUNT_ID}:secret:{SECRET_MANAGER_NAME}:POSTGRES_DB::"
         }
       ],
       "logConfiguration": {

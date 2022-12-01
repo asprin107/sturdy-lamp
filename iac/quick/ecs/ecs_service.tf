@@ -4,7 +4,7 @@ resource "aws_ecs_service" "haegol" {
 
   task_definition = aws_ecs_task_definition.haegol.arn
 
-  launch_type = "FARGATE"
+  launch_type = "EC2"
 
   desired_count = 1
 
@@ -12,6 +12,16 @@ resource "aws_ecs_service" "haegol" {
     container_name   = "haegol"
     container_port   = 8080
     target_group_arn = aws_alb_target_group.alb_http_tg_1.arn
+  }
+
+  ordered_placement_strategy {
+    type = "spread" # random / spread / binpack
+    field = "attribute:ecs.availability-zone"
+  }
+
+  ordered_placement_strategy {
+    type = "spread"
+    field = "instanceId"
   }
 
   deployment_controller {
@@ -25,7 +35,7 @@ resource "aws_ecs_service" "haegol" {
   network_configuration {
     subnets          = data.aws_subnets.pub_subnets.ids
     security_groups  = data.aws_security_groups.ecs.ids
-    assign_public_ip = true
+    assign_public_ip = false # false for launch_type: EC2
   }
 
   lifecycle {

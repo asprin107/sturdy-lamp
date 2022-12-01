@@ -5,8 +5,11 @@ resource "aws_ecs_task_definition" "haegol" {
   cpu    = "2048"
   memory = "4096"
 
-  requires_compatibilities = ["FARGATE"]
-  network_mode             = "awsvpc"
+  requires_compatibilities = [
+    "FARGATE",
+    "EC2"
+  ]
+  network_mode = "awsvpc"
   #  ipc_mode                 = "task" # does't support for Fargate
   #  pid_mode                 = "task" # does't support for Fargate
 
@@ -18,9 +21,10 @@ resource "aws_ecs_task_definition" "haegol" {
     operating_system_family = "LINUX"
   }
 
-  ephemeral_storage {
-    size_in_gib = 25
-  }
+  # Available for Fargate only.
+  #  ephemeral_storage {
+  #    size_in_gib = 25
+  #  }
 
   # NOTE only used for creation.
   lifecycle {
