@@ -63,7 +63,7 @@ resource "aws_launch_template" "ecs-node" {
 
   name          = "lt-ecs-${local.naming_convention}"
   image_id      = data.aws_ssm_parameter.ami-ecs-node-arm.value # ECS ARM : "ami-09f43ca191c371485" (at 2022.12.01)
-  instance_type = "m5.large"
+  instance_type = "m6g.large"
   key_name      = "ec2-test"
 
   update_default_version = false

@@ -1,7 +1,7 @@
 [
   {
     "name": "haegol",
-    "image": "142904692278.dkr.ecr.ap-northeast-1.amazonaws.com/lamp-ecs-test:1.0.0",
+    "image": "142904692278.dkr.ecr.ap-northeast-1.amazonaws.com/lamp-haegol:1.0.0",
     "cpu": 1024,
     "memory": 2048,
     "memoryReservation": 1024,
