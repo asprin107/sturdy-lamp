@@ -4,7 +4,7 @@ module "role" {
 
   eks_oidc_provider_arn = var.eks_oidc_provider_arn
   eks_oidc_provider_url = var.eks_oidc_provider_url
-  suffix                = var.suffix
+  suffix                = "cluster-autoscaler-${var.suffix}"
 }
 
 resource "aws_iam_policy" "irsa-cluster-autoscaler" {

@@ -1,4 +1,4 @@
-module "eks-cluster" {
+module "eks_cluster" {
   source = "../../_module/eks/cluster"
 
   eks = {
@@ -32,8 +32,4 @@ data "aws_subnets" "eks_cluster" {
     name   = "tag:Name"
     values = ["lamp-pub-sbn-*"]
   }
-}
-
-output "test" {
-  value = module.eks-cluster.test
 }
