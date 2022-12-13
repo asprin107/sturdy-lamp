@@ -1,10 +1,5 @@
-variable "eks_name" {
-  description = "EKS name."
-  type        = string
-}
-
 variable "suffix" {
-  description = "IRSA Name suffix about aws load balancer controller."
+  description = "IRSA role name suffix."
   type        = string
 }
 

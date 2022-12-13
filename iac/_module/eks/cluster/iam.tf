@@ -37,15 +37,38 @@ resource "aws_iam_role_policy_attachment" "eks-node-ecr-policy" {
 }
 
 
+# EKS IAM OIDC providedr
+resource "aws_iam_openid_connect_provider" "eks_oidc" {
+  client_id_list  = ["sts.amazonaws.com"]
+  thumbprint_list = [] # data.tls_certificate.eks_certificate_authority[*].sha1_fingerprint
+  url             = aws_eks_cluster.eks.identity[0].oidc[0].issuer
+
+  tags = {
+    eks_cluster_name = aws_eks_cluster.eks.name
+  }
+}
+
+# See https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/eks_cluster.html#enabling-iam-roles-for-service-accounts
+# See https://registry.terraform.io/providers/hashicorp/tls/latest/docs/data-sources/certificate
+data "tls_certificate" "eks_certificate_authority" {
+  url = aws_eks_cluster.eks.identity[0].oidc[0].issuer
+}
+
 # EKS IRSA for aws-load-balancer-controller
 module "irsa-aws-load-balancer-controller" {
   source = "../../iam/irsa/aws-load-balancer-controller"
-  prefix = local.naming
+  suffix = local.naming
+
+  eks_oidc_provider_arn = aws_iam_openid_connect_provider.eks_oidc.arn
+  eks_oidc_provider_url = aws_iam_openid_connect_provider.eks_oidc.url
 }
 
 # EKS IRSA for cluster-autoscaler
 module "irsa-cluster-autoscaler" {
   source   = "../../iam/irsa/cluster-autoscaler"
   eks_name = aws_eks_cluster.eks.name
-  prefix   = local.naming
+  suffix   = local.naming
+
+  eks_oidc_provider_arn = aws_iam_openid_connect_provider.eks_oidc.arn
+  eks_oidc_provider_url = aws_iam_openid_connect_provider.eks_oidc.url
 }

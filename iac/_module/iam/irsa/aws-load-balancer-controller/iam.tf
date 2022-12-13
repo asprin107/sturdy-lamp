@@ -1,6 +1,14 @@
 # EKS IRSA for aws-loadbalancer-controller
+module "role" {
+  source = "../irsa-role"
+
+  eks_oidc_provider_arn = var.eks_oidc_provider_arn
+  eks_oidc_provider_url = var.eks_oidc_provider_url
+  suffix                = var.suffix
+}
+
 resource "aws_iam_policy" "irsa-aws-load-balancer-controller" {
-  name   = "${var.prefix}-eks-irsa-loadbalancer-controller"
+  name   = "eks-irsa-loadbalancer-controller-${var.suffix}"
   policy = <<EOT
 {
   "Version": "2012-10-17",

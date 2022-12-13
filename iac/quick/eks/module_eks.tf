@@ -33,3 +33,7 @@ data "aws_subnets" "eks_cluster" {
     values = ["lamp-pub-sbn-*"]
   }
 }
+
+output "test" {
+  value = module.eks-cluster.test
+}

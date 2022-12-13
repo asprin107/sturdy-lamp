@@ -30,8 +30,8 @@ data "aws_iam_policy_document" "codebuild_vpc" {
       variable = "ec2:AuthorizedService"
     }
     condition {
-      test = "StringEquals"
-      values = [for v in var.subnet_ids: format("arn:aws:ec2:ap-northeast-1:${data.aws_caller_identity.current.account_id}:subnet/%s", v)]
+      test     = "StringEquals"
+      values   = [for v in var.subnet_ids : format("arn:aws:ec2:ap-northeast-1:${data.aws_caller_identity.current.account_id}:subnet/%s", v)]
       variable = "ec2:Subnet"
     }
     actions   = ["ec2:CreateNetworkInterfacePermission"]
