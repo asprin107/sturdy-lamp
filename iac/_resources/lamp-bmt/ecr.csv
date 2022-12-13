@@ -1,0 +1,2 @@
+service_name,image_tag_mutability,scan_on_push
+haegol,MUTABLE,false

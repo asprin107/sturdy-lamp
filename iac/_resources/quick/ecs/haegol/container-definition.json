@@ -1,0 +1,76 @@
+[
+  {
+    "name": "haegol",
+    "image": "142904692278.dkr.ecr.ap-northeast-1.amazonaws.com/lamp-haegol:1.0.0",
+    "cpu": 1024,
+    "memory": 2048,
+    "memoryReservation": 1024,
+    "disableNetworking": false,
+    "essential": true,
+    "interactive": false,
+    "privileged": false,
+    "pseudoTerminal": false,
+    "startTimeout": 120,
+    "stopTimeout": 120,
+    "user": "root:root",
+    "portMappings": [
+      {
+        "containerPort": 8080,
+        "protocol": "tcp"
+      }
+    ],
+    "ulimits": [
+      {
+        "name": "nofile",
+        "softLimit": 16384,
+        "hardLimit": 65536
+      }
+    ],
+    "logConfiguration": {
+      "logDriver": "awslogs",
+      "options": {
+        "awslogs-create-group": "true",
+        "awslogs-group": "awslogs-haegol",
+        "awslogs-region": "ap-northeast-1",
+        "awslogs-stream-prefix": "haegol"
+      }
+    }
+  },
+  {
+    "name": "postgres",
+    "image":"postgres:latest",
+    "cpu": 1024,
+    "memory": 2048,
+    "memoryReservation": 1024,
+    "disableNetworking": false,
+    "essential": false,
+    "interactive": false,
+    "privileged": false,
+    "pseudoTerminal": false,
+    "startTimeout": 120,
+    "stopTimeout": 120,
+    "user": "root:root",
+    "portMappings": [
+      {
+        "containerPort":5432,
+        "protocol": "tcp"
+      }
+    ],
+    "ulimits": [
+      {
+        "name": "nofile",
+        "softLimit": 16384,
+        "hardLimit": 65536
+      }
+    ],
+    "logConfiguration": {
+      "logDriver": "awslogs",
+      "options": {
+        "awslogs-create-group": "true",
+        "awslogs-group": "awslogs-haegol-postgres",
+        "awslogs-region": "ap-northeast-1",
+        "awslogs-stream-prefix": "haegol-postgres"
+      }
+    }
+  }
+]

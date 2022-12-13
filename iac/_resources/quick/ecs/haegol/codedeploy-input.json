@@ -1,0 +1,12 @@
+{
+  "applicationName": "lamp-ecs-test-codedeploy",
+  "deploymentGroupName": "lamp-ecs-test-deployment-group",
+  "revision": {
+    "revisionType": "S3",
+    "s3Location": {
+      "bucket": "lamp-bmt-tfstate",
+      "key": "cicd/appspec.yaml",
+      "bundleType": "YAML"
+    }
+  }
+}
