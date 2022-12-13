@@ -1,6 +1,6 @@
 resource "aws_autoscaling_group" "ecs" {
   name     = "asg-${local.naming_convention}"
-  min_size = 0
+  min_size = 1
   max_size = 2
 
   capacity_rebalance = false
