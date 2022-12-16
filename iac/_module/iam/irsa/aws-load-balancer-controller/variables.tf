@@ -12,3 +12,8 @@ variable "eks_oidc_provider_url" {
   description = "EKS OIDC provider url."
   type        = string
 }
+
+variable "k8s_service_account_name" {
+  description = "Kubernetes service account name for IRSA."
+  type        = string
+}

@@ -61,6 +61,8 @@ module "irsa-aws-load-balancer-controller" {
 
   eks_oidc_provider_arn = aws_iam_openid_connect_provider.eks_oidc.arn
   eks_oidc_provider_url = aws_iam_openid_connect_provider.eks_oidc.url
+
+  k8s_service_account_name = "aws-load-balancer-controller"
 }
 
 # EKS IRSA for cluster-autoscaler
@@ -71,4 +73,6 @@ module "irsa-cluster-autoscaler" {
 
   eks_oidc_provider_arn = aws_iam_openid_connect_provider.eks_oidc.arn
   eks_oidc_provider_url = aws_iam_openid_connect_provider.eks_oidc.url
+
+  k8s_service_account_name = "cluster-autoscaler"
 }
