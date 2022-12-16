@@ -37,10 +37,10 @@ resource "aws_iam_role_policy_attachment" "eks-node-ecr-policy" {
 }
 
 
-# EKS IAM OIDC providedr
+# EKS IAM OIDC provider
 resource "aws_iam_openid_connect_provider" "eks_oidc" {
   client_id_list  = ["sts.amazonaws.com"]
-  thumbprint_list = [] # data.tls_certificate.eks_certificate_authority[*].sha1_fingerprint
+  thumbprint_list = data.tls_certificate.eks_certificate_authority.certificates[*].sha1_fingerprint
   url             = aws_eks_cluster.eks.identity[0].oidc[0].issuer
 
   tags = {
