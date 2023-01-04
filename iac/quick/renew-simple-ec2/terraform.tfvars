@@ -1,4 +1,5 @@
 aws_account  = "bmt"
+profile      = "bmt"
 project      = "simple-ec2"
 env          = "poc"
 service      = "practice"

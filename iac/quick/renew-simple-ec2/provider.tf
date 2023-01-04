@@ -1,12 +1,4 @@
 terraform {
-  cloud {
-    organization = "friendly-coding"
-
-    workspaces {
-      name = "quick-simple-ec2"
-    }
-  }
-
   required_providers {
     tls = {
       source  = "hashicorp/tls"
@@ -20,7 +12,8 @@ terraform {
 }
 
 provider "aws" {
-  region = var.region
+  region  = var.region
+  profile = var.profile
 }
 
 provider "tls" {
