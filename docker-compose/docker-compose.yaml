@@ -3,11 +3,14 @@ services:
   fluentd:
     image: fluentd:v1.14-1
     container_name: fluentd
-    hostname: fluentd
+    user: root
     ports:
       - "24224:24224"
     volumes:
       - ./fluentd/fluent.conf:/fluentd/etc/fluent.conf
+      - ./fluentd/entrypoint.sh:/bin/entrypoint.sh
+#      - ./fluentd/fluent-plugin-s3/lib/fluent/plugin:/fluentd/plugins
+#      - ./fluentd/fluent-plugin-s3/lib/fluent/log-ext.rb:/fluentd/plugins/fluentd/log-ext.rb
 
   spring-petclinic:
     build:

@@ -4,3 +4,6 @@
 [submodule "docker-compose/spring-webflow-samples"]
 	path = docker-compose/spring-webflow-samples
 	url = https://github.com/spring-projects/spring-webflow-samples.git
+[submodule "docker-compose/fluentd/fluent-plugin-s3"]
+	path = docker-compose/fluentd/fluent-plugin-s3
+	url = https://github.com/fluent/fluent-plugin-s3.git
