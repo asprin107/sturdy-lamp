@@ -1,0 +1,38 @@
+version: "3.9"
+services:
+  fluentd:
+    image: fluentd:v1.14-1
+    container_name: fluentd-logger
+    volumes:
+      - ./fluentd/fluent.conf:/fluentd/etc/fluent.conf
+
+  spring-petclinic:
+    build:
+      context: ./spring-petclinic/
+      dockerfile: Dockerfile
+    container_name: spring-petclinic
+    ports:
+      - "${APP_PORT:-8080}:8080"
+    depends_on:
+      - fluentd
+
+  spring-webflow-samples:
+    image: maven:3.8.6-eclipse-temurin-17
+    container_name: spring-hotel
+    working_dir: /spring-webflow-samples/booking-mvc
+    entrypoint: ["mvn", "jetty:run"]
+#    logging:
+#      driver: fluentd
+#      options:
+#        fluentd-address: fluentd-logger:24224
+#        fluentd-retry-wait: 5 # r * 1.5 ^(N-1) . r: this value, N : the number of retries. See https://github.com/fluent/fluent-logger-golang/tree/master#bufferlimit
+#        fluentd-max-retries: 13
+#        fluentd-async: 'false'
+#        fluentd-buffer-limit: 8192
+    ports:
+      - "8081:8080"
+    depends_on:
+      - fluentd
+    volumes:
+      - ./spring-webflow-samples:/spring-webflow-samples
+      - ~/.m2/:/root/.m2
