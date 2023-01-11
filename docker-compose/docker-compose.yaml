@@ -35,6 +35,7 @@ services:
         fluentd-retry-wait: '5s' # r * 1.5 ^(N-1) . r: this value, N : the number of retries. See https://github.com/fluent/fluent-logger-golang/tree/master#bufferlimit
         fluentd-max-retries: '13'
         fluentd-buffer-limit: '8192'
+        tag: 'service.spring-hotel'
     links:
       - fluentd
     ports:
