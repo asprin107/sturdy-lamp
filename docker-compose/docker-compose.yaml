@@ -11,6 +11,8 @@ services:
       - ./fluentd/entrypoint.sh:/bin/entrypoint.sh
 #      - ./fluentd/fluent-plugin-s3/lib/fluent/plugin:/fluentd/plugins
 #      - ./fluentd/fluent-plugin-s3/lib/fluent/log-ext.rb:/fluentd/plugins/fluentd/log-ext.rb
+    environment:
+      - TZ=Asia/Seoul
 
   spring-petclinic:
     build:

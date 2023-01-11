@@ -1,5 +1,6 @@
 #!/bin/sh
 
+apk add tzdata # Set timezone as KST (Asia/Seoul)
 gem install fluent-plugin-s3 --no-document
 
 #source vars if file exists
