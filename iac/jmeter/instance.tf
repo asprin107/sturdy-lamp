@@ -2,8 +2,7 @@ module "ec2" {
   source = "git::https://asprin107@github.com/asprin107/sturdy-lamp.git//iac/_module/ec2/instance-static_ip"
 
   #  ami              = "ami-002e2b2b1334aaf55" # aws ec2 describe-images --owners amazon --filters Name="description",Values="Amazon Linux 2*" Name="architecture",Values="x86_64" --output table
-  #  ami              = data.aws_ssm_parameter.ec2-ami.value
-  ami                   = "ami-05f53c2def3a51a08"
+  ami                   = data.aws_ssm_parameter.ec2-ami.value
   instance_type         = "t3.large"
   key_name              = var.ec2-key-name
   list_sg               = [module.security_group.list_security_group.id]
@@ -13,13 +12,13 @@ module "ec2" {
   instance_profile_name = aws_iam_instance_profile.ec2.name
   root_volume_size      = "50"
 
-  user_data_base64 = "" #base64encode(file("./ec2_init.sh"))
+  user_data_base64 = base64encode(file("./user_data.yaml")) #base64encode(file("./ec2_init.sh"))
 
   depends_on = [module.ec2-key]
 }
 
 data "aws_ssm_parameter" "ec2-ami" {
-  name = "/aws/service/ami-windows-latest/Windows_Server-2022-English-Core-Base"
+  name = "/aws/service/ami-windows-latest/Windows_Server-2022-English-Full-Base"
 }
 
 resource "aws_iam_instance_profile" "ec2" {
