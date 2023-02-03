@@ -2,22 +2,50 @@ version: 1.0
 tasks:
   - task: executeScript
     inputs:
-      - frequency: always
+      - frequency: once # always / once
         type: powershell
-        runAs: localSystem
+        runAs: admin
         content: |-
           echo "Create jmeter home directory"
           New-Item -Path 'C:\Users\Administrator\Desktop\JmeterHome' -ItemType Directory
+          
           echo "Download jmeter"
-          wget https://dlcdn.apache.org//jmeter/binaries/apache-jmeter-5.5.zip -o C:\Users\Administrator\Desktop\JmeterHome\apache-jmeter-5.5.zip
+          $Url = "https://dlcdn.apache.org//jmeter/binaries/apache-jmeter-5.5.zip"
+          $DownloadFile = "C:\Users\Administrator\Desktop\JmeterHome\" + $(Split-Path -Path $Url -Leaf)
+          Invoke-WebRequest -Uri $Url -OutFile $DownloadFile
+          
           echo "Unzip jmeter"
           Expand-Archive C:\Users\Administrator\Desktop\JmeterHome\apache-jmeter-5.5.zip -DestinationPath C:\Users\Administrator\Desktop\JmeterHome
+          
+          echo "Download jmeter plugin 'plugin-manager'"
+          $Url = "https://jmeter-plugins.org/get"
+          $DownloadFile = "C:\Users\Administrator\Desktop\JmeterHome\apache-jmeter-5.5\lib\ext\plugin-manager.jar"
+          Invoke-WebRequest -Uri $Url -OutFile $DownloadFile
+          
+          echo "Download jmeter plugin 'jpgc-graphs-basic'"
+          $Url = "https://jmeter-plugins.org/files/packages/jpgc-graphs-basic-2.0.zip"
+          $DownloadFile = "C:\Users\Administrator\Desktop\JmeterHome\" + $(Split-Path -Path $Url -Leaf)
+          Invoke-WebRequest -Uri $Url -OutFile $DownloadFile
+          Expand-Archive $DownloadFile -DestinationPath C:\Users\Administrator\Desktop\JmeterHome
+          Move-Item -Path C:\Users\Administrator\Desktop\JmeterHome\lib\*.jar -Destination C:\Users\Administrator\Desktop\JmeterHome\apache-jmeter-5.5\lib
+          Move-Item -Path C:\Users\Administrator\Desktop\JmeterHome\lib\ext\*.jar -Destination C:\Users\Administrator\Desktop\JmeterHome\apache-jmeter-5.5\lib\ext
+          
           echo "Download jdk8"
-          wget https://cdn.azul.com/zulu/bin/zulu8.68.0.21-ca-jdk8.0.362-win_x64.zip -o C:\Users\Administrator\Desktop\JmeterHome\zulu8.68.0.21-ca-jdk8.0.362-win_x64.zip
+          $Url = "https://cdn.azul.com/zulu/bin/zulu8.68.0.21-ca-jdk8.0.362-win_x64.zip"
+          $DownloadFile = "C:\Users\Administrator\Desktop\JmeterHome\" + $(Split-Path -Path $Url -Leaf)
+          Invoke-WebRequest -Uri $Url -OutFile $DownloadFile
+          
           echo "Unzip jdk8"
           Expand-Archive C:\Users\Administrator\Desktop\JmeterHome\zulu8.68.0.21-ca-jdk8.0.362-win_x64.zip -DestinationPath C:\Users\Administrator\Desktop\JmeterHome
+          
           echo "Add jdk8 in Environment 'Path'"
           # https://poshcode.gitbook.io/powershell-faq/src/getting-started/environment-variables
           $Path = "C:\Users\Administrator\Desktop\JmeterHome\zulu8.68.0.21-ca-jdk8.0.362-win_x64\bin;"
           $Path = [Environment]::GetEnvironmentVariable("PATH", "Machine") + [IO.Path]::PathSeparator + $Path
           [Environment]::SetEnvironmentVariable("Path", $Path, "Machine")
+          
+          echo "Restart Computer"
+          Restart-Computer
+          # Window have to send message about path changed. 
+          # https://serverfault.com/questions/875819/using-powershell-to-update-system-path-doesnt-immediately-work
+          # https://mnaoumov.wordpress.com/2012/07/24/powershell-add-directory-to-environment-path-variable/
