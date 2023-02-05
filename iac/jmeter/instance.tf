@@ -1,55 +1,38 @@
-module "ec2" {
+# Jmeter Client (MS-window, GUI needed)
+module "jmeter-client" {
   source = "git::https://asprin107@github.com/asprin107/sturdy-lamp.git//iac/_module/ec2/instance-static_ip"
 
-  #  ami              = "ami-002e2b2b1334aaf55" # aws ec2 describe-images --owners amazon --filters Name="description",Values="Amazon Linux 2*" Name="architecture",Values="x86_64" --output table
-  ami                   = data.aws_ssm_parameter.ec2-ami.value
+  ami                   = data.aws_ssm_parameter.jmeter-client-ami.value
   instance_type         = "t3.large"
   key_name              = var.ec2-key-name
   list_sg               = [module.security_group.list_security_group.id]
   project_name          = var.project
-  subject_name          = var.service
+  subject_name          = format("%s-%s", var.service, "client")
   subnet_id             = module.network.pub_subnet_ids[0]
   instance_profile_name = aws_iam_instance_profile.ec2.name
   root_volume_size      = "50"
 
-  user_data_base64 = base64encode(file("./user_data.yaml")) #base64encode(file("./ec2_init.sh"))
+  user_data_base64 = base64encode(file("./user_data_leader.yaml"))
 
   depends_on = [module.ec2-key]
 }
 
-data "aws_ssm_parameter" "ec2-ami" {
-  name = "/aws/service/ami-windows-latest/Windows_Server-2022-English-Full-Base"
-}
+# Jmeter Server (Linux)
+module "jmeter-server" {
+  source = "git::https://asprin107@github.com/asprin107/sturdy-lamp.git//iac/_module/ec2/instance-static_ip"
+  count  = var.worker-node-amount
 
-resource "aws_iam_instance_profile" "ec2" {
-  name = "ec2-profile-${var.project}-${var.service}"
-  role = aws_iam_role.instance_role.name
+  ami                   = data.aws_ssm_parameter.jmeter-server-ami.value
+  instance_type         = "t3.medium"
+  key_name              = var.ec2-key-name
+  list_sg               = [module.security_group.list_security_group.id]
+  project_name          = var.project
+  subject_name          = format("%s-%s-%02d", var.service, "server", count.index+1)
+  subnet_id             = module.network.pub_subnet_ids[count.index % length(module.network.pub_subnet_ids)]
+  instance_profile_name = aws_iam_instance_profile.ec2.name
+  root_volume_size      = "50"
 
-  tags = module.tags.tags
-}
-resource "aws_iam_role" "instance_role" {
-  name               = "role-ec2-${var.project}-${var.service}"
-  assume_role_policy = data.aws_iam_policy_document.ec2_profile.json
+  user_data_base64 = base64encode(file("./user_data_worker.sh"))
 
-  tags = module.tags.tags
-}
-data "aws_iam_policy_document" "ec2_profile" {
-  statement {
-    principals {
-      type        = "Service"
-      identifiers = ["ec2.amazonaws.com"]
-    }
-    effect  = "Allow"
-    actions = ["sts:AssumeRole"]
-  }
-}
-
-# EC2 managed with SSM
-data "aws_iam_policy" "ssm-managed-policy" {
-  name = "AmazonSSMManagedInstanceCore"
-}
-
-resource "aws_iam_role_policy_attachment" "instance_role_ssm_policy_att" {
-  policy_arn = data.aws_iam_policy.ssm-managed-policy.arn
-  role       = aws_iam_role.instance_role.name
+  depends_on = [module.ec2-key, module.jmeter-client]
 }

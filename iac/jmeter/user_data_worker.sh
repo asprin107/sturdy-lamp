@@ -29,6 +29,15 @@ tar -zxf /JmeterHome/zulu8.68.0.21-ca-jdk8.0.362-linux_x64.tar.gz -C /JmeterHome
 echo "Add jdk8 in Environment 'Path'"
 echo '
 # Add Java home environment
-export JAVA_HOME=\/JmeterHome/zulu8.68.0.21-ca-jdk8.0.362-linux_x64"
+export JAVA_HOME=/JmeterHome/zulu8.68.0.21-ca-jdk8.0.362-linux_x64
 export PATH=$JAVA_HOME/bin:$PATH
 ' >> /etc/profile
+
+echo "Add Script on startup."
+cat <<EOF >> /etc/rc.d/init.d/autostart_jmeter_rmi.sh
+JMETER_HOME="/JmeterHome/apache-jmeter-5.5/bin/"
+$JMETER_HOME/jmeter-server
+EOF
+chmod +x /etc/rc.d/init.d/autostart_jmeter_rmi.sh
+
+reboot

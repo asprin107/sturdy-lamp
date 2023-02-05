@@ -3,6 +3,10 @@ variable "ec2-key-name" {
   description = "ec2 key name"
   type        = string
 }
+variable "worker-node-amount" {
+  description = "Jmeter worker node amount."
+  type        = number
+}
 
 
 variable "region" {
