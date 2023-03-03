@@ -1,7 +1,7 @@
 resource "aws_instance" "service_ec2" {
-  ami           = var.ami.ami_x86
+  ami           = var.ami
   instance_type = var.instance_type
-  key_name      = aws_key_pair.ec2_pub_key.key_name
+  key_name      = var.key_name
 
   network_interface {
     device_index         = 0
@@ -23,7 +23,7 @@ resource "aws_instance" "service_ec2" {
 
 resource "aws_network_interface" "service_ec2_eni" {
   subnet_id       = var.subnet_id
-  security_groups = [aws_security_group.public.id]
+  security_groups = var.instance_sg_ids
 
   tags = {
     Name = "eni-${var.project_name}-${var.subject_name}"

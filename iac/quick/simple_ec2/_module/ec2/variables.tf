@@ -3,15 +3,18 @@ variable "instance_type" {
   type        = string
 }
 
-variable "ami" {
-  description = "amazon machine iamge"
-  type = object({
-    ami_x86 = string
-  })
+variable "instance_sg_ids" {
+  description = "ec2 instance's security group ids."
+  type        = set(string)
 }
 
-variable "ec2_pub_key" {
-  description = "ec2 public key for ssh connection."
+variable "ami" {
+  description = "amazon machine iamge"
+  type        = string
+}
+
+variable "key_name" {
+  description = "ec2 public key name for ssh connection."
   type        = string
 }
 
@@ -22,11 +25,6 @@ variable "project_name" {
 
 variable "subject_name" {
   description = "subject name in project."
-  type        = string
-}
-
-variable "vpc_id" {
-  description = "vpc id"
   type        = string
 }
 

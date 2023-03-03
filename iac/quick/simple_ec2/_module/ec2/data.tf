@@ -8,11 +8,3 @@ data "aws_iam_policy_document" "trust_ec2" {
     actions = ["sts:AssumeRole"]
   }
 }
-
-data "aws_iam_policy_document" "ec2_role_policy" {
-  statement {
-    effect    = "Allow"
-    actions   = ["s3:*"]
-    resources = ["*"]
-  }
-}

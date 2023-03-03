@@ -1,19 +1,24 @@
-module "network" {
-  source = "./_module/basic-network"
-
-  project_name = "simple-ec2"
-  region       = var.region
-  rule         = yamldecode(file("./simple-ec2-network-rule.yaml"))
-}
-
 module "simple-ec2" {
   source = "./_module/ec2"
+  count  = length(local.ec2_info)
 
-  project_name  = "simple-ec2"
-  subject_name  = "test"
-  vpc_id        = module.network.main_vpc_id
-  subnet_id     = module.network.list_public_subnet[0].id
+  project_name  = local.ec2_info[count.index].project_name
+  subject_name  = local.ec2_info[count.index].subject_name
+  subnet_id     = data.aws_subnets.instance_deployed.ids[(count.index + 1) % length(data.aws_subnets.instance_deployed.ids)]
   instance_type = "t3.medium"
-  ami           = var.ami
-  ec2_pub_key   = var.ec2_pub_key
+  ami           = data.aws_ssm_parameter.default.value
+  key_name      = "simple-ec2"
+
+  instance_sg_ids = [aws_security_group.public.id]
+}
+
+module "key" {
+  source = "../../_module/private-key"
+}
+
+module "ec2-key" {
+  source = "../../_module/ec2/key_pair"
+
+  ec2_pub_key = module.key.rsa-pub-key
+  key_name    = "simple-ec2"
 }

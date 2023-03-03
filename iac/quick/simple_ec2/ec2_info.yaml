@@ -1,0 +1,10 @@
+[
+    {
+        "project_name": "lamp",
+        "subject_name": "sample_target"
+    },
+    {
+        "project_name": "lamp",
+        "subject_name": "metric_influxdb_grafana"
+    }
+]
