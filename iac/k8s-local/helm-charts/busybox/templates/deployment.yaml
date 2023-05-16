@@ -3,16 +3,16 @@ kind: Deployment
 metadata:
   name: {{ template "fullname" . }}
   labels:
-    app: "{{ .Chart.Name }}-{{ .Chart.Version }}"
+    chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
 spec:
   replicas: {{ .Values.replicaCount }}
   selector:
     matchLabels:
-      app: {{ template "fullname" . }}
+      chart: {{ template "fullname" . }}
   template:
     metadata:
       labels:
-        app: {{ template "fullname" . }}
+        chart: {{ template "fullname" . }}
     spec:
       containers:
         - name: {{ .Chart.Name }}
