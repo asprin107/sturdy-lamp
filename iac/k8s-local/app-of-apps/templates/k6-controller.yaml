@@ -1,0 +1,17 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: k6-operator
+  namespace: argocd
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  destination:
+    namespace: k6
+    server: {{ .Values.spec.destination.server }}
+  project: default
+
+  source:
+    path: config/default
+    repoURL: https://github.com/grafana/k6-operator.git
+    targetRevision: HEAD
