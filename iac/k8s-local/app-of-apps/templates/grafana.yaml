@@ -15,3 +15,7 @@ spec:
     path: charts/grafana
     repoURL: https://github.com/grafana/helm-charts.git
     targetRevision: HEAD
+    helm:
+      parameters:
+        - name: service.type
+          value: NodePort
