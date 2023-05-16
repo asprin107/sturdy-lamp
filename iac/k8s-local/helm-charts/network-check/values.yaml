@@ -1,0 +1,17 @@
+replicaCount: 1
+image:
+  repository: curlimages/curl
+  tag: latest
+  pullPolicy: IfNotPresent
+service:
+  name: network-check
+  type: ClusterIP
+  externalPort: 80
+  internalPort: 80
+resources:
+  limits:
+    cpu: 100m
+    memory: 128Mi
+  requests:
+    cpu: 100m
+    memory: 128Mi
