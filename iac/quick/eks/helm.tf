@@ -11,4 +11,6 @@ resource "helm_release" "argocd" {
     name  = "server.service.type"
     value = "LoadBalancer"
   }
+
+  depends_on = [module.eks_cluster]
 }

@@ -27,7 +27,7 @@ module "jmeter-server" {
   key_name              = var.ec2-key-name
   list_sg               = [module.security_group.list_security_group.id]
   project_name          = var.project
-  subject_name          = format("%s-%s-%02d", var.service, "server", count.index+1)
+  subject_name          = format("%s-%s-%02d", var.service, "server", count.index + 1)
   subnet_id             = module.network.pub_subnet_ids[count.index % length(module.network.pub_subnet_ids)]
   instance_profile_name = aws_iam_instance_profile.ec2.name
   root_volume_size      = "50"
