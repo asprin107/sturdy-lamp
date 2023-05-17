@@ -9,11 +9,9 @@ image:
 service:
   name: influxdb
   type: ClusterIP
-  externalPort: 8086
-  internalPort: 8086
-  enabled: true
-  port: 8086
+  port: 80
   targetPort: 8086
+  enabled: true
   annotations: {}
   labels: {}
   portName: service

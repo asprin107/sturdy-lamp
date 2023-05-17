@@ -19,8 +19,7 @@ spec:
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           ports:
-            - containerPort: {{ .Values.service.internalPort }}
-          command: ["tail", "-f", "/dev/null"]
+            - containerPort: {{ .Values.service.targetPort }}
           env:
             - name: DOCKER_INFLUXDB_INIT_MODE
               value: setup

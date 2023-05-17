@@ -23,8 +23,8 @@ spec:
   type: {{ .Values.service.type }}
     {{- end }}
   ports:
-    - port: {{ .Values.service.externalPort }}
-      targetPort: {{ .Values.service.internalPort }}
+    - port: {{ .Values.service.port }}
+      targetPort: {{ .Values.service.targetPort }}
       protocol: TCP
       name: {{ .Values.service.name }}
       {{- if (and (eq .Values.service.type "NodePort") (not (empty .Values.service.nodePort))) }}
