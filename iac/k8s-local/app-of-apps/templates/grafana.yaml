@@ -19,3 +19,5 @@ spec:
       parameters:
         - name: service.type
           value: NodePort
+        - name: service.nodePort
+          value: "30081"
