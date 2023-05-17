@@ -1,0 +1,21 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: influxdb
+  namespace: argocd
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  destination:
+    namespace: argocd
+    server: {{ .Values.spec.destination.server }}
+  project: default
+
+  source:
+    path: iac/k8s-local/helm-charts/influxdb
+    repoURL: https://github.com/asprin107/sturdy-lamp.git
+    targetRevision: HEAD
+    helm:
+      parameters:
+        - name: service.type
+          value: NodePort
