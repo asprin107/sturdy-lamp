@@ -15,19 +15,16 @@ variable "root_volume_size" {
   default     = "20"
 }
 
+variable "custom_ami_enabled" {
+  description = "Custom AMI enabled."
+  type        = bool
+  default     = false
+}
+
 variable "ami" {
-  description = "amazon machine iamge"
+  description = "amazon machine image"
   type        = string
-}
-
-variable "project_name" {
-  description = "project name."
-  type        = string
-}
-
-variable "subject_name" {
-  description = "subject name in project."
-  type        = string
+  default     = null
 }
 
 variable "subnet_id" {
@@ -49,4 +46,15 @@ variable "user_data_base64" {
   description = "ec2 user data for launch instance encoded with base64"
   type        = string
   default     = null
+}
+
+variable "tags" {
+  description = "Default tags."
+  type = object({
+    Project     = string
+    Service     = string
+    Management  = string
+    Environment = string
+    Account     = string
+  })
 }

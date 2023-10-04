@@ -1,5 +1,5 @@
 resource "aws_instance" "service_ec2" {
-  ami           = var.ami
+  ami           = var.custom_ami_enabled ? var.ami : data.aws_ssm_parameter.amzn2-kernel-5_10-x86_64-gp2-latest.value
   instance_type = var.instance_type
   key_name      = var.key_name
 
@@ -19,7 +19,7 @@ resource "aws_instance" "service_ec2" {
   user_data_base64 = var.user_data_base64
 
   tags = {
-    Name = "${var.project_name}-${var.subject_name}"
+    Name = local.naming_rule
   }
 }
 
@@ -28,15 +28,14 @@ resource "aws_network_interface" "service_ec2_eni" {
   security_groups = var.list_sg
 
   tags = {
-    Name = "${var.project_name}-${var.subject_name}"
+    Name = local.naming_rule
   }
 }
 
 resource "aws_eip" "service_ec2_public_ip" {
-  vpc      = true
   instance = aws_instance.service_ec2.id
 
   tags = {
-    Name = "${var.project_name}-${var.subject_name}"
+    Name = local.naming_rule
   }
 }

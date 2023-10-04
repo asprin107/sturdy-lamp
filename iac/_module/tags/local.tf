@@ -4,6 +4,6 @@ locals {
     Service     = var.service
     Management  = "terraform"
     Environment = var.env
-    Account     = var.aws_account
+    Account     = var.aws_profile
   }
 }
