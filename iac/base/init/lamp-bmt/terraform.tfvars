@@ -1,3 +1,3 @@
 profile = "bmt"
-region  = "ap-northeast-1"
+region  = "ap-northeast-2"
 project = "lamp"

@@ -2,7 +2,7 @@ terraform {
   backend "s3" {
     bucket         = "lamp-bmt-tfstate"
     key            = "lamp-bmt-tfstate/base/network/pub-only/terraform.tfstate"
-    region         = "ap-northeast-1"
+    region         = "ap-northeast-2"
     profile        = "bmt"
     dynamodb_table = "terraform-lock"
   }
