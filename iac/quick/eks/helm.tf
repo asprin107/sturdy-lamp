@@ -5,7 +5,7 @@ resource "helm_release" "argocd" {
   namespace        = "argocd"
   create_namespace = true
 
-  version = "5.16.5"
+  version = "6.7.18"
 
   set {
     name  = "server.service.type"

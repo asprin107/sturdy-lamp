@@ -1,5 +1,11 @@
 # Argo CD
 
+Create kubeconfig for EKS
+
+```shell
+aws eks update-kubeconfig --region region-code --name my-cluster --profile profile
+```
+
 Get initial password
 
 ```shell
