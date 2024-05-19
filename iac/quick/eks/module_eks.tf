@@ -9,7 +9,7 @@ module "eks_cluster" {
       capacity_type   = "ON_DEMAND"
       ami_type        = "AL2_x86_64"
       instance_types  = ["t3.medium"]
-      disk_size       = 40
+      disk_size       = 200
       desired_size    = 2
       max_size        = 4
       min_size        = 2
