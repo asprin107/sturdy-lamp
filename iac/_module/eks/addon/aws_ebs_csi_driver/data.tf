@@ -17,21 +17,3 @@ data "aws_iam_policy_document" "trusted_external_secrets" {
     }
   }
 }
-
-data "aws_iam_policy_document" "irsa_external_secrets" {
-  version = "2012-10-17"
-  statement {
-    effect = "Allow"
-    actions = [
-      "ssm:GetParameter*",
-      "ssm:PutParameter",
-      "ssm:DescribeParameters",
-      "ssm:DeleteParameter*",
-      "ssm:AddTagsToResource",
-      "ssm:ListTagsForResource",
-      "ssm:RemoveTagsFromResource",
-      "tag:GetResources"
-    ]
-    resources = ["*"]
-  }
-}
