@@ -1,13 +1,12 @@
-variable "project_name" {
-  description = "The project name. It used to every resources name prefix."
+variable "name" {
+  description = "This used for all resource names."
   type        = string
 }
 
 variable "region" {
-  description = "aws vpc region."
+  description = "AWS vpc region."
   type        = string
 }
-
 
 variable "rule" {
   description = "Network creation rule."
@@ -41,4 +40,10 @@ variable "rule" {
       }
     }
   }
+}
+
+variable "tags" {
+  description = "Additional tags"
+  type        = map(any)
+  default     = {}
 }

@@ -19,8 +19,9 @@ resource "aws_subnet" "subnets_public" {
   availability_zone = "${var.region}${var.rule.subnets.available_zones[count.index % length(var.rule.subnets.available_zones)]}"
   vpc_id            = aws_vpc.main.id
   tags = merge(
+    var.tags,
     {
-      Name = "${var.project_name}-pub-sbn-${var.rule.subnets.available_zones[count.index % length(var.rule.subnets.available_zones)]}"
+      Name = "${var.name}-pub-${var.rule.subnets.available_zones[count.index % length(var.rule.subnets.available_zones)]}"
     }
   )
 }
@@ -31,8 +32,9 @@ resource "aws_subnet" "subnets_private" {
   availability_zone = "${var.region}${var.rule.subnets.available_zones[count.index % length(var.rule.subnets.available_zones)]}"
   vpc_id            = aws_vpc.main.id
   tags = merge(
+    var.tags,
     {
-      Name = "${var.project_name}-prv-sbn-${var.rule.subnets.available_zones[count.index % length(var.rule.subnets.available_zones)]}"
+      Name = "${var.name}-prv-${var.rule.subnets.available_zones[count.index % length(var.rule.subnets.available_zones)]}"
     }
   )
 }

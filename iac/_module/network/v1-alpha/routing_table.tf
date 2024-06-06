@@ -1,9 +1,17 @@
 ### Public
 resource "aws_route_table" "public" {
   vpc_id = aws_vpc.main.id
+  tags = merge(
+    var.tags,
+    { Name = "${var.name}-pub" }
+  )
 }
 resource "aws_default_route_table" "public" {
   default_route_table_id = aws_route_table.public.id
+  tags = merge(
+    var.tags,
+    { Name = "${var.name}-pub" }
+  )
 }
 resource "aws_route_table_association" "public" {
   count          = length(aws_subnet.subnets_public)
@@ -22,6 +30,10 @@ resource "aws_route" "public_route_egress_rule" {
 resource "aws_route_table" "private" {
   count  = length(aws_subnet.subnets_private)
   vpc_id = aws_vpc.main.id
+  tags = merge(
+    var.tags,
+    { Name = "${var.name}-prv" }
+  )
 }
 resource "aws_route_table_association" "private" {
   count          = length(aws_subnet.subnets_private)

@@ -5,7 +5,8 @@ resource "aws_vpc" "main" {
 
   instance_tenancy = "default"
 
-  tags = {
-    Name = var.project_name
-  }
+  tags = merge(
+    var.tags,
+    { Name = var.name }
+  )
 }
