@@ -1,6 +1,6 @@
 # EKS Cluster Service Role
 resource "aws_iam_role" "eks" {
-  name               = "${local.naming}-eks-cluster"
+  name               = "${var.name}-eks-cluster"
   assume_role_policy = data.aws_iam_policy_document.trust-eks-cluster.json
 }
 
@@ -17,7 +17,7 @@ resource "aws_iam_role_policy_attachment" "cluster-vpc-policy" {
 
 # EKS Node Service Role
 resource "aws_iam_role" "eks_node" {
-  name               = "${local.naming}-eks-node"
+  name               = "${var.name}-eks-node"
   assume_role_policy = data.aws_iam_policy_document.trust-eks-node.json
 }
 
@@ -56,8 +56,8 @@ data "tls_certificate" "eks_certificate_authority" {
 
 # EKS IRSA for aws-load-balancer-controller
 module "irsa-aws-load-balancer-controller" {
-  source = "../../iam/irsa/aws-load-balancer-controller"
-  suffix = local.naming
+  source = "../../../iam/irsa/aws-load-balancer-controller"
+  suffix = var.name
 
   eks_oidc_provider_arn = aws_iam_openid_connect_provider.eks_oidc.arn
   eks_oidc_provider_url = aws_iam_openid_connect_provider.eks_oidc.url
@@ -67,9 +67,9 @@ module "irsa-aws-load-balancer-controller" {
 
 # EKS IRSA for cluster-autoscaler
 module "irsa-cluster-autoscaler" {
-  source   = "../../iam/irsa/cluster-autoscaler"
+  source   = "../../../iam/irsa/cluster-autoscaler"
   eks_name = aws_eks_cluster.eks.name
-  suffix   = local.naming
+  suffix   = var.name
 
   eks_oidc_provider_arn = aws_iam_openid_connect_provider.eks_oidc.arn
   eks_oidc_provider_url = aws_iam_openid_connect_provider.eks_oidc.url

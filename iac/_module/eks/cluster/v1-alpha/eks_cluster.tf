@@ -1,11 +1,11 @@
 resource "aws_eks_cluster" "eks" {
-  name     = local.naming
+  name     = var.name
   role_arn = aws_iam_role.eks.arn
-  version  = "1.28"
+  version  = var.eks_version
 
   vpc_config {
-    subnet_ids         = var.eks.subnet_ids
-    security_group_ids = var.eks.security_group_ids
+    subnet_ids         = var.eks_subnet_ids
+    security_group_ids = var.eks_security_group_ids
   }
 
   kubernetes_network_config {
@@ -18,29 +18,29 @@ resource "aws_eks_cluster" "eks" {
 
 
 resource "aws_eks_node_group" "default" {
-  node_group_name = "${local.naming}-default"
+  node_group_name = "${var.name}-default"
   release_version = nonsensitive(data.aws_ssm_parameter.eks_ami_release_version.value)
 
   cluster_name  = aws_eks_cluster.eks.name
   node_role_arn = aws_iam_role.eks_node.arn
-  subnet_ids    = var.eks.subnet_ids
+  subnet_ids    = var.eks_subnet_ids
 
-  capacity_type  = var.eks.node_group.capacity_type
-  ami_type       = var.eks.node_group.ami_type
-  instance_types = var.eks.node_group.instance_types # Default
-  disk_size      = var.eks.node_group.disk_size
+  capacity_type  = var.eks_nodegroup_capacity_type
+  ami_type       = var.eks_nodegroup_ami_type
+  instance_types = var.eks_nodegroup_instance_types # Default
+  disk_size      = var.eks_nodegroup_disk_size
   labels = {
     type = "eks-default"
   }
 
   scaling_config {
-    desired_size = var.eks.node_group.desired_size
-    max_size     = var.eks.node_group.max_size
-    min_size     = var.eks.node_group.min_size
+    desired_size = var.eks_nodegroup_desired_size
+    max_size     = var.eks_nodegroup_max_size
+    min_size     = var.eks_nodegroup_min_size
   }
 
   update_config {
-    max_unavailable = var.eks.node_group.max_unavailable
+    max_unavailable = var.eks_nodegroup_max_unavailable
     #    max_unavailable_percentage = 50
   }
 
