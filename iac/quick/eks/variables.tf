@@ -27,3 +27,13 @@ variable "service" {
   description = "Service name (Sub category)"
   type        = string
 }
+
+variable "eks_vpc_id" {
+  type = set(string)
+}
+variable "eks_subnet_ids" {
+  type = set(string)
+}
+variable "eks_security_group_ids" {
+  type = set(string)
+}

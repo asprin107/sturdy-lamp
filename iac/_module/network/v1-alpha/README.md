@@ -47,5 +47,5 @@ No modules.
 |------|-------------|
 | <a name="output_main_vpc_id"></a> [main\_vpc\_id](#output\_main\_vpc\_id) | VPC id. |
 | <a name="output_nat_eips"></a> [nat\_eips](#output\_nat\_eips) | Objects associated with NAT Gateway's public IP. |
-| <a name="output_subnets_private"></a> [subnets\_private](#output\_subnets\_private) | Objects associated with private subnets. |
-| <a name="output_subnets_public"></a> [subnets\_public](#output\_subnets\_public) | Objects associated with public subnets. |
+| <a name="output_private_subnet_ids"></a> [private\_subnet\_ids](#output\_private\_subnet\_ids) | Private subnet ids list. |
+| <a name="output_public_subnet_ids"></a> [public\_subnet\_ids](#output\_public\_subnet\_ids) | Public subnet ids list. |

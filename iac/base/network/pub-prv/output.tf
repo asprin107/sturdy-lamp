@@ -1,9 +1,9 @@
 output "network" {
   description = "Result of created network resources."
   value = {
-    vpc_id          = module.network.main_vpc_id
-    subnets_public  = module.network.subnets_public
-    subnets_private = module.network.subnets_private
+    vpc_id             = module.network.main_vpc_id
+    public_subnet_ids  = module.network.public_subnet_ids
+    private_subnet_ids = module.network.private_subnet_ids
   }
 }
 

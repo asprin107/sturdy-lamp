@@ -3,14 +3,14 @@ output "main_vpc_id" {
   value       = aws_vpc.main.id
 }
 
-output "subnets_public" {
-  description = "Objects associated with public subnets."
-  value       = aws_subnet.subnets_public
+output "public_subnet_ids" {
+  description = "Public subnet ids list."
+  value       = [for v in aws_subnet.subnets_public : v.id]
 }
 
-output "subnets_private" {
-  description = "Objects associated with private subnets."
-  value       = aws_subnet.subnets_private
+output "private_subnet_ids" {
+  description = "Private subnet ids list."
+  value       = [for v in aws_subnet.subnets_private : v.id]
 }
 
 output "nat_eips" {
