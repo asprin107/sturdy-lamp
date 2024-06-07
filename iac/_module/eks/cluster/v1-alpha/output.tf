@@ -1,8 +1,10 @@
 output "eks_cluster_values" {
-  value = aws_eks_cluster.eks
+  description = ""
+  value       = aws_eks_cluster.eks
 }
 
 output "eks" {
+  description = "EKS oidc info."
   value = {
     cluster_name      = aws_eks_cluster.eks.name
     oidc_issuer_url   = try(aws_eks_cluster.eks.identity[0].oidc[0].issuer, null)
