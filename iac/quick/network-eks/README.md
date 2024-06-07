@@ -10,6 +10,7 @@ No providers.
 
 | Name | Source | Version |
 |------|--------|---------|
+| <a name="module_addon"></a> [addon](#module\_addon) | ../../_module/eks/addon/v1-alpha | n/a |
 | <a name="module_eks"></a> [eks](#module\_eks) | ../../_module/eks/cluster/v1-alpha | n/a |
 | <a name="module_naming"></a> [naming](#module\_naming) | ../../_module/naming | n/a |
 | <a name="module_network"></a> [network](#module\_network) | ../../_module/network/v1-alpha | n/a |

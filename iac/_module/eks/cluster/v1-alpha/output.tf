@@ -1,9 +1,9 @@
 output "eks_cluster_values" {
-  description = ""
+  description = "Created EKS info."
   value       = aws_eks_cluster.eks
 }
 
-output "eks" {
+output "eks_info" {
   description = "EKS oidc info."
   value = {
     cluster_name      = aws_eks_cluster.eks.name
