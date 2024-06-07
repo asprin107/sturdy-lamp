@@ -6,6 +6,10 @@ module "eks" {
 }
 
 module "addon" {
-  source           = "../../_module/eks/addon/v1-alpha"
-  eks_cluster_name = module.eks.eks_info.cluster_name
+  source = "../../_module/eks/addon/v1-alpha"
+
+  name                  = module.naming.name
+  eks_cluster_name      = module.eks.eks_info.cluster_name
+  eks_oidc_issuer_url   = module.eks.eks_info.oidc_issuer_url
+  eks_oidc_provider_arn = module.eks.eks_info.oidc_provider_arn
 }
