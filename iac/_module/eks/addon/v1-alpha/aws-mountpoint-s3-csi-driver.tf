@@ -44,7 +44,7 @@ data "aws_iam_policy_document" "aws-mountpoint-s3-csi-driver-trusted" {
     effect  = "Allow"
     actions = ["sts:AssumeRoleWithWebIdentity"]
     condition {
-      test     = "StringEquals"
+      test     = " StringLike"
       values   = ["system:serviceaccount:kube-system:s3-csi-*"]
       variable = "${replace(var.eks_oidc_issuer_url, "https://", "")}:sub"
     }
