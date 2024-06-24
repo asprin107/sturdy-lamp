@@ -3,6 +3,11 @@ variable "name" {
   type        = string
 }
 
+variable "vpc_id" {
+  description = "VPC id for EKS."
+  type        = string
+}
+
 variable "eks_cluster_name" {
   description = "EKS cluster name that addons will be deployed."
   type        = string

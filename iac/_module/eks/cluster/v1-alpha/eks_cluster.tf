@@ -4,8 +4,11 @@ resource "aws_eks_cluster" "eks" {
   version  = var.eks_version
 
   vpc_config {
-    subnet_ids         = var.eks_subnet_ids
-    security_group_ids = var.eks_security_group_ids
+    subnet_ids              = var.eks_subnet_ids
+    security_group_ids      = var.eks_security_group_ids
+    endpoint_public_access  = true
+    endpoint_private_access = true
+    public_access_cidrs     = concat(var.eks_public_access_cidrs, ["${chomp(data.http.current_ip.response_body)}/32"])
   }
 
   kubernetes_network_config {
@@ -59,4 +62,8 @@ resource "aws_eks_node_group" "default" {
 
 data "aws_ssm_parameter" "eks_ami_release_version" {
   name = "/aws/service/eks/optimized-ami/${aws_eks_cluster.eks.version}/amazon-linux-2/recommended/release_version"
+}
+
+data "http" "current_ip" {
+  url = "https://ipinfo.io/ip"
 }

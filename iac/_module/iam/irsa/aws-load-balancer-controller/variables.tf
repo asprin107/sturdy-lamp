@@ -16,4 +16,5 @@ variable "eks_oidc_provider_url" {
 variable "k8s_service_account_name" {
   description = "Kubernetes service account name for IRSA."
   type        = string
+  default     = "aws-load-balancer-controller"
 }

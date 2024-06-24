@@ -17,6 +17,11 @@ variable "eks_security_group_ids" {
   type        = set(string)
   default     = []
 }
+variable "eks_public_access_cidrs" {
+  description = "EKS cluster public access cidrs."
+  type        = list(string)
+  default     = []
+}
 
 variable "eks_nodegroup_capacity_type" {
   description = "ON_DEMAND | SPOT"
