@@ -52,9 +52,9 @@ resource "aws_eks_node_group" "default" {
     }
   )
 
-  #  lifecycle {
-  #    ignore_changes = [scaling_config[0].desired_size]
-  #  }
+  lifecycle {
+    ignore_changes = [scaling_config[0].desired_size]
+  }
 }
 
 data "aws_ssm_parameter" "eks_ami_release_version" {

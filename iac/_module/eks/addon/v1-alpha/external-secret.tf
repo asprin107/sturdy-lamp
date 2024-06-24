@@ -2,7 +2,7 @@ resource "helm_release" "external-secrets" {
   count            = var.external-secrets-enabled ? 1 : 0
   name             = "external-secrets"
   repository       = "https://charts.external-secrets.io"
-  chart            = "external-secrets/external-secrets"
+  chart            = "external-secrets"
   version          = var.external-secrets-addon_version
   namespace        = var.external-secrets-namespace
   create_namespace = true
@@ -55,7 +55,7 @@ data "aws_iam_policy_document" "external-secrets-policy" {
       "secretsmanager:TagResource",
       "secretsmanager:DeleteSecret"
     ]
-    resources = var.external-secrets-target_secretsmanager != [] ? var.external-secrets-target_secretsmanager : ["arn:aws:secretsmanager:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:*"]
+    resources = var.external-secrets-target_secretsmanager != null ? var.external-secrets-target_secretsmanager : ["arn:aws:secretsmanager:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:*"]
   }
 }
 
@@ -71,7 +71,7 @@ variable "external-secrets-addon_version" {
 variable "external-secrets-target_secretsmanager" {
   description = "Default value is \"arn:aws:secretsmanager:$\\{data.aws_region.current.name\\}:$\\{data.aws_caller_identity.current.account_id\\}:*\""
   type        = set(string)
-  default     = []
+  default     = null
 }
 variable "external-secrets-namespace" {
   description = ""
