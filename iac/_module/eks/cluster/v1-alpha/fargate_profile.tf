@@ -1,11 +1,14 @@
 resource "aws_eks_fargate_profile" "fargate" {
   cluster_name           = aws_eks_cluster.eks.name
-  fargate_profile_name   = "eks-fargate-${var.name}"
+  fargate_profile_name   = "fargate-${var.name}"
   pod_execution_role_arn = aws_iam_role.fargate.arn
   subnet_ids             = var.eks_subnet_ids
 
   selector {
-    namespace = "fargate"
+    namespace = "kube-system"
+  }
+  selector {
+    namespace = "default"
   }
 }
 
@@ -29,7 +32,7 @@ data "aws_iam_policy_document" "trust-fargate" {
     ]
     condition {
       test     = "ArnLike"
-      values   = ["arn:aws:eks:region-code:${data.aws_caller_identity.current.account_id}:fargateprofile/${aws_eks_cluster.eks.name}/*"]
+      values   = ["arn:aws:eks:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:fargateprofile/${aws_eks_cluster.eks.name}/*"]
       variable = "aws:SourceArn"
     }
   }

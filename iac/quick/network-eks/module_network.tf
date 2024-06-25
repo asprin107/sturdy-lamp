@@ -14,7 +14,7 @@ module "network" {
         max    = 20
       }
       prv = {
-        amount = 0
+        amount = 2
         max    = 44
       }
     }

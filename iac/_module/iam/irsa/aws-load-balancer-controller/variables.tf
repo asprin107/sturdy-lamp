@@ -13,6 +13,11 @@ variable "eks_oidc_provider_url" {
   type        = string
 }
 
+variable "k8s_namespace" {
+  type    = string
+  default = "kube-system"
+}
+
 variable "k8s_service_account_name" {
   description = "Kubernetes service account name for IRSA."
   type        = string
