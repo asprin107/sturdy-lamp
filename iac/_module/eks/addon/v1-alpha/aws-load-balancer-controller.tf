@@ -5,8 +5,7 @@ resource "helm_release" "aws_load_balancer_controller" {
   name             = "aws-load-balancer-controller"
   namespace        = var.aws_load_balancer_controller-namespace
   create_namespace = true
-
-  version = var.aws_load_balancer_controller-version
+  version          = var.aws_load_balancer_controller-version
 
   values = var.aws_load_balancer_controller-values == null ? [templatefile("${path.module}/values/aws_load_balancer_controller-values.yaml", {
     cluster_name = var.name

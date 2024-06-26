@@ -8,6 +8,11 @@ variable "region" {
   type        = string
 }
 
+variable "eks_enabled" {
+  type    = bool
+  default = true
+}
+
 variable "rule" {
   description = "Network creation rule."
   type = object({

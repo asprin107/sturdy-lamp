@@ -5,8 +5,7 @@ resource "helm_release" "cluster_autoscaler" {
   name             = "cluster-autoscaler"
   namespace        = var.cluster_autoscaler-namespace
   create_namespace = true
-
-  version = var.cluster_autoscaler-version
+  version          = var.cluster_autoscaler-version
 
   values = var.cluster_autoscaler-values == null ? [templatefile("${path.module}/values/cluster_autoscaler-values.yaml", {
     cluster_name = var.name

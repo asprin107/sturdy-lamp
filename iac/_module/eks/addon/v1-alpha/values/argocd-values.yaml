@@ -1,0 +1,23 @@
+server:
+  ingress:
+    enabled: true
+    ingressClassName: alb
+    hostname: ${hostname}
+    annotations:
+      alb.ingress.kubernetes.io/load-balancer-name: argocd-${cluster_name}
+      alb.ingress.kubernetes.io/security-groups: ${security_group}
+      alb.ingress.kubernetes.io/ip-address-type: ipv4
+      alb.ingress.kubernetes.io/target-type: ip
+      alb.ingress.kubernetes.io/scheme: internet-facing
+      alb.ingress.kubernetes.io/manage-backend-security-group-rules: true
+      alb.ingress.kubernetes.io/success-codes: 200-399
+
+
+
+configs:
+  cm:
+    resource.compareoptions: |
+      # disables status field diffing in specified resource types
+      ignoreAggregatedRoles: true
+  params:
+    server.insecure: true

@@ -23,7 +23,10 @@ resource "aws_subnet" "subnets_public" {
     var.tags,
     {
       Name = "${var.name}-pub-${var.rule.subnets.available_zones[count.index % length(var.rule.subnets.available_zones)]}"
-    }
+    },
+    var.eks_enabled ? {
+      "kubernetes.io/role/elb" = "1"
+    } : {}
   )
 }
 
@@ -36,6 +39,9 @@ resource "aws_subnet" "subnets_private" {
     var.tags,
     {
       Name = "${var.name}-prv-${var.rule.subnets.available_zones[count.index % length(var.rule.subnets.available_zones)]}"
-    }
+    },
+    var.eks_enabled ? {
+      "kubernetes.io/role/internal-elb" = "1"
+    } : {}
   )
 }

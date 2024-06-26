@@ -5,18 +5,13 @@ resource "helm_release" "argocd" {
   name             = "argocd"
   namespace        = "argocd"
   create_namespace = true
+  version          = var.argocd-version
 
-  version = var.argocd-version
-
-  values = var.argocd-values
-
-  dynamic "set" {
-    for_each = local.check_service_type
-    content {
-      name  = set.key
-      value = set.value
-    }
-  }
+  values = var.argocd-values == null ? [templatefile("${path.module}/values/argocd-values.yaml", {
+    cluster_name   = var.name
+    hostname       = "'\"*.elb.amazonaws.com\"'" // Default, available without DNS resources.
+    security_group = aws_security_group.argocd[0].id
+  })] : var.argocd-values // Default, Ignoring RBAC changes made by AggregateRoles
 }
 
 resource "aws_security_group" "argocd" {
@@ -72,7 +67,7 @@ variable "argocd-type" {
 
 variable "argocd-values" {
   type    = list(string)
-  default = []
+  default = null
 }
 
 locals {
