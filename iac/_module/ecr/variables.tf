@@ -1,3 +1,8 @@
+variable "name" {
+  description = "ECR name"
+  type        = string
+}
+
 variable "scan_on_push" {
   description = "Indicates whether images are scanned after being pushed to the repository (true) or not scanned (false)"
   type        = bool
@@ -10,18 +15,8 @@ variable "image_tag_mutability" {
   default     = "MUTABLE"
 }
 
-variable "service_name" {
-  description = "Service name for container."
-  type        = string
-}
-
 variable "tags" {
-  description = "Default tags."
-  type = object({
-    Project     = string
-    Service     = string
-    Management  = string
-    Environment = string
-    Account     = string
-  })
+  description = "Additional tags"
+  type        = map(any)
+  default     = {}
 }

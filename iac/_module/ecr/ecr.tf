@@ -1,5 +1,5 @@
 resource "aws_ecr_repository" "default" {
-  name = local.naming_convention
+  name = var.name
 
   image_tag_mutability = var.image_tag_mutability
   image_scanning_configuration {
