@@ -1,5 +1,5 @@
 variable "suffix" {
-  description = "IRSA role name suffix."
+  description = "IRSA Name suffix about aws load balancer controller."
   type        = string
 }
 
@@ -14,12 +14,12 @@ variable "eks_oidc_provider_url" {
 }
 
 variable "k8s_namespace" {
-  description = "Kubernetes namespace for serviceaccount."
-  type        = string
-  default     = "kube-system"
+  type    = string
+  default = "kube-system"
 }
 
 variable "k8s_service_account_name_prefix" {
   description = "Kubernetes service account name for IRSA."
   type        = string
+  default     = "kyverno-"
 }

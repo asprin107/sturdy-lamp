@@ -6,8 +6,8 @@ module "irsa_role" {
   eks_oidc_provider_url = var.eks_oidc_provider_url
   suffix                = "loadbalancer-controller-${var.suffix}"
 
-  k8s_namespace            = var.k8s_namespace
-  k8s_service_account_name = var.k8s_service_account_name
+  k8s_namespace                   = var.k8s_namespace
+  k8s_service_account_name_prefix = var.k8s_service_account_name
 }
 
 resource "aws_iam_role_policy_attachment" "irsa-att" {

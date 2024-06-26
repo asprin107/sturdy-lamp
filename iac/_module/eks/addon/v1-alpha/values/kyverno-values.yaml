@@ -1,0 +1,10 @@
+admissionController:
+  rbac:
+    serviceAccount:
+      annotations:
+        eks.amazonaws.com/role-arn: ${sa_role_arn}
+backgroundController:
+  rbac:
+    serviceAccount:
+      annotations:
+        eks.amazonaws.com/role-arn: ${sa_role_arn}

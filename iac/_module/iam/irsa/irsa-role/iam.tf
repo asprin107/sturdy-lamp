@@ -4,9 +4,9 @@ data "aws_iam_policy_document" "assume_role_policy" {
     effect  = "Allow"
 
     condition {
-      test     = "StringEquals"
+      test     = "StringLike"
       variable = "${replace(var.eks_oidc_provider_url, "https://", "")}:sub"
-      values   = ["system:serviceaccount:${var.k8s_namespace}:${var.k8s_service_account_name}"]
+      values   = ["system:serviceaccount:${var.k8s_namespace}:${var.k8s_service_account_name_prefix}*"]
     }
 
     principals {
