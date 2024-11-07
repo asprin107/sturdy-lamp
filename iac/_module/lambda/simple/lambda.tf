@@ -1,7 +1,7 @@
 resource "aws_lambda_function" "lambda" {
   function_name = var.name
   role          = aws_iam_role.lambda.arn
-  description   = var.lambda_description
+  description   = var.description
 
   reserved_concurrent_executions = -1 # default -1 : no concurrency limit. 0 : disable lambda from triggered
 
@@ -29,9 +29,13 @@ resource "aws_lambda_function" "lambda" {
   timeout = 10 # default 3s
 
   # Source from
-  filename = null
-  #  package_type = "ZIP"       # ZIP or Image
+  filename     = "lambda_function.zip"
+  package_type = "Zip" # Zip or Image
   #  s3_bucket         = aws_s3_bucket.lambda_source_archive.bucket
   #  s3_key            = var.source_path == "" ? var.source_file : "${var.source_path}/${var.source_file}"
   #  s3_object_version = var.object_version
+
+  lifecycle {
+    ignore_changes = [source_code_hash]
+  }
 }

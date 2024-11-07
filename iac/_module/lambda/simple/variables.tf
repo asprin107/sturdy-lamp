@@ -15,7 +15,7 @@ variable "lambda_iam_policy" {
   default     = null
 }
 
-variable "lambda_description" {
+variable "description" {
   description = "description for lambda function"
   type        = string
 }
