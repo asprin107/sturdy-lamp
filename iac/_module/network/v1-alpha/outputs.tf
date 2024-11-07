@@ -17,3 +17,7 @@ output "nat_eips" {
   description = "Objects associated with NAT Gateway's public IP."
   value       = aws_eip.nat_ip
 }
+
+output "default_sg_id" {
+  value = data.aws_security_group.default_sg.id
+}

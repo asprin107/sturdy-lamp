@@ -31,20 +31,23 @@ No modules.
 | [aws_subnet.subnets_private](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/subnet) | resource |
 | [aws_subnet.subnets_public](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/subnet) | resource |
 | [aws_vpc.main](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/vpc) | resource |
+| [aws_security_group.default_sg](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/security_group) | data source |
 
 ## Inputs
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
+| <a name="input_eks_enabled"></a> [eks\_enabled](#input\_eks\_enabled) | n/a | `bool` | `true` | no |
 | <a name="input_name"></a> [name](#input\_name) | This used for all resource names. | `string` | n/a | yes |
 | <a name="input_region"></a> [region](#input\_region) | AWS vpc region. | `string` | n/a | yes |
-| <a name="input_rule"></a> [rule](#input\_rule) | Network creation rule. | <pre>object({<br>    host_cidr = string<br>    subnets = object({<br>      newbits         = number<br>      available_zones = list(string)<br>      pub = object({<br>        amount = number<br>        max    = number<br>      })<br>      prv = object({<br>        amount = number<br>        max    = number<br>      })<br>    })<br>  })</pre> | <pre>{<br>  "host_cidr": "10.0.0.0/16",<br>  "subnets": {<br>    "available_zones": [<br>      "a",<br>      "c"<br>    ],<br>    "newbits": 6,<br>    "prv": {<br>      "amount": 2,<br>      "max": 44<br>    },<br>    "pub": {<br>      "amount": 2,<br>      "max": 20<br>    }<br>  }<br>}</pre> | no |
+| <a name="input_rule"></a> [rule](#input\_rule) | Network creation rule. | <pre>object({<br/>    host_cidr = string<br/>    subnets = object({<br/>      newbits         = number<br/>      available_zones = list(string)<br/>      pub = object({<br/>        amount = number<br/>        max    = number<br/>      })<br/>      prv = object({<br/>        amount = number<br/>        max    = number<br/>      })<br/>    })<br/>  })</pre> | <pre>{<br/>  "host_cidr": "10.0.0.0/16",<br/>  "subnets": {<br/>    "available_zones": [<br/>      "a",<br/>      "c"<br/>    ],<br/>    "newbits": 6,<br/>    "prv": {<br/>      "amount": 2,<br/>      "max": 44<br/>    },<br/>    "pub": {<br/>      "amount": 2,<br/>      "max": 20<br/>    }<br/>  }<br/>}</pre> | no |
 | <a name="input_tags"></a> [tags](#input\_tags) | Additional tags | `map(any)` | `{}` | no |
 
 ## Outputs
 
 | Name | Description |
 |------|-------------|
+| <a name="output_default_sg_id"></a> [default\_sg\_id](#output\_default\_sg\_id) | n/a |
 | <a name="output_main_vpc_id"></a> [main\_vpc\_id](#output\_main\_vpc\_id) | VPC id. |
 | <a name="output_nat_eips"></a> [nat\_eips](#output\_nat\_eips) | Objects associated with NAT Gateway's public IP. |
 | <a name="output_private_subnet_ids"></a> [private\_subnet\_ids](#output\_private\_subnet\_ids) | Private subnet ids list. |
