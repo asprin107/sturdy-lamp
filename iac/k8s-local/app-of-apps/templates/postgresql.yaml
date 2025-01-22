@@ -7,8 +7,8 @@ spec:
   project: default
   source:
     repoURL: registry-1.docker.io/bitnamicharts
-    targetRevision: 16.4.5
-    chart: postgresql
+    targetRevision: 15.1.6
+    chart: postgresql-ha
   destination:
     server: {{ .Values.spec.destination.server }}
     namespace: argocd
