@@ -1,7 +1,7 @@
 replicaCount: 1
 image:
-  repository: busybox
-  tag: latest
+  repository: ubuntu
+  tag: "24.10"
   pullPolicy: IfNotPresent
 service:
   name: busybox
