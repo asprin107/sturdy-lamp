@@ -1,21 +1,34 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: postgresql
+  name: mlflow
   namespace: argocd
 spec:
   project: default
   source:
-    repoURL: registry-1.docker.io/bitnamicharts
-    targetRevision: 15.1.6
-    chart: postgresql-ha
+    repoURL: https://community-charts.github.io/helm-charts
+    targetRevision: 0.13.1
+    chart: mlflow
+    helm:
+      values: |
+        service:
+          type: NodePort
+        extraArgs:
+          artifacts-destination: s3://mltest
+        artifactRoot:
+          proxiedArtifactStorage: true
+        extraEnvVars:
+          MLFLOW_ENABLE_PROXY_MULTIPART_UPLOAD: true
+          MLFLOW_S3_ENDPOINT_URL: http://minio.default:32000
+          AWS_ACCESS_KEY_ID: <<YOUR OWN KEY ID>>
+          AWS_SECRET_ACCESS_KEY: <<YOUR OWN SECRET KEY>>
   destination:
     server: {{ .Values.spec.destination.server }}
     namespace: argocd
   syncPolicy:
     syncOptions: # Sync options which modifies sync behavior
       - CreateNamespace=true # Namespace Auto-Creation ensures that namespace specified as the application destination exists in the destination cluster.
-      - ApplyOutOfSyncOnly=true # Only sync out-of-sync resources, rather than applying every object in the application
+      - ApplyOutOfSyncOnly=false # Only sync out-of-sync resources, rather than applying every object in the application
     # The retry feature is available since v1.7
     retry:
       limit: 5 # number of failed sync attempt retries; unlimited number of attempts if less than 0
