@@ -9,6 +9,10 @@ spec:
     repoURL: registry-1.docker.io/bitnamicharts
     targetRevision: 15.1.6
     chart: postgresql-ha
+    helm:
+      values: |
+        service:
+          type: NodePort
   destination:
     server: {{ .Values.spec.destination.server }}
     namespace: argocd
