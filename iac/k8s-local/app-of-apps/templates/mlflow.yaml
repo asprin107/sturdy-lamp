@@ -13,7 +13,15 @@ spec:
       values: |
         service:
           type: NodePort
-          port: 35000
+        extraArgs:
+          artifacts-destination: s3://mltest
+        artifactRoot:
+          proxiedArtifactStorage: true
+        extraEnvVars:
+          MLFLOW_ENABLE_PROXY_MULTIPART_UPLOAD: true
+          MLFLOW_S3_ENDPOINT_URL: http://minio.default:32000
+          AWS_ACCESS_KEY_ID: <<YOUR OWN KEY ID>>
+          AWS_SECRET_ACCESS_KEY: <<YOUR OWN SECRET KEY>>
   destination:
     server: {{ .Values.spec.destination.server }}
     namespace: argocd

@@ -1,0 +1,30 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: minio
+  namespace: argocd
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  destination:
+    namespace: default
+    server: {{ .Values.spec.destination.server }}
+  project: default
+  source:
+    repoURL: https://github.com/minio/minio.git
+    path: helm/minio
+    targetRevision: HEAD
+    helm:
+      values: |
+        replicas: 3
+        resources:
+          requests:
+            memory: 1Gi
+        persistence:
+          size: 2Gi
+        minioAPIPort: "32000"
+        service:
+          type: NodePort
+          port: "32000"
+        consoleService:
+          type: NodePort
