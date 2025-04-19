@@ -56,7 +56,7 @@ spec:
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: istio-gateway
+  name: istio-ingressgateway
   namespace: argocd
 spec:
   project: default
@@ -64,6 +64,10 @@ spec:
     repoURL: https://istio-release.storage.googleapis.com/charts
     targetRevision: 1.25.2
     chart: gateway
+    helm:
+      valuesObject:
+        service:
+          type: NodePort
   destination:
     server: {{ .Values.spec.destination.server }}
     namespace: istio-ingress

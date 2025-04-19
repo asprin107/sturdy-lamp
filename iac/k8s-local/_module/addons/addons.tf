@@ -1,7 +1,7 @@
 resource "argocd_application" "apps" {
   count = var.enabled_default_apps ? 1 : 0
   metadata {
-    name      = "app-of-apps"
+    name      = "add-ons"
     namespace = "argocd"
   }
 
@@ -13,7 +13,7 @@ resource "argocd_application" "apps" {
 
     source {
       repo_url        = "https://github.com/asprin107/sturdy-lamp.git"
-      path            = "iac/k8s-local/app-of-apps"
+      path            = "iac/k8s-local/add-ons"
       target_revision = "HEAD"
     }
   }

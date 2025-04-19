@@ -1,0 +1,35 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: bookinfo
+  namespace: argocd
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  source:
+    path: iac/k8s-local/helm-charts/bookinfo
+    repoURL: https://github.com/asprin107/sturdy-lamp.git
+    targetRevision: HEAD
+    helm:
+      valuesObject:
+        istio:
+          namespace: istio-ingress
+  destination:
+    namespace: default
+    server: {{ .Values.spec.destination.server }}
+  project: default
+  syncPolicy:
+    syncOptions: # Sync options which modifies sync behavior
+      - CreateNamespace=true # Namespace Auto-Creation ensures that namespace specified as the application destination exists in the destination cluster.
+      - ApplyOutOfSyncOnly=false # Only sync out-of-sync resources, rather than applying every object in the application
+    managedNamespaceMetadata: # Sets the metadata for the application namespace. Only valid if CreateNamespace=true (see above), otherwise it's a no-op.
+      labels: # The labels to set on the application namespace
+        istio-injection: enabled
+      # annotations: # The annotations to set on the application namespace
+    # The retry feature is available since v1.7
+    retry:
+      limit: 5 # number of failed sync attempt retries; unlimited number of attempts if less than 0
+      backoff:
+        duration: 5s # the amount to back off. Default unit is seconds, but could also be a duration (e.g. "2m", "1h")
+        factor: 2 # a factor to multiply the base duration after each failed retry
+        maxDuration: 3m # the maximum amount of time allowed for the backoff strategy
