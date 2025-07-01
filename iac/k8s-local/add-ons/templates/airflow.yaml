@@ -1,0 +1,30 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: airflow
+  namespace: argocd
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  destination:
+    namespace: airflow
+    server: {{ .Values.spec.destination.server }}
+  project: default
+
+  source:
+    path: chart
+    repoURL: https://github.com/apache/airflow.git
+    targetRevision: 3.0.2
+    helm:
+      values: |
+        createUserJob:
+          useHelmHooks: false
+          applyCustomEnv: false
+        migrateDatabaseJob:
+          useHelmHooks: false
+          applyCustomEnv: false
+        executor: "KubernetesExecutor"
+  
+  syncPolicy:
+    syncOptions:
+      - CreateNamespace=true
