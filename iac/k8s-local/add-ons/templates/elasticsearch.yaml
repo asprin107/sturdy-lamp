@@ -25,7 +25,7 @@ spec:
         antiAffinity: "soft"
 
         # Shrink default JVM heap.
-        esJavaOpts: "-Xmx128m -Xms128m"
+        esJavaOpts: "-Xmx512m -Xms512m"
 
         # Allocate smaller chunks of memory per pod.
         resources:
@@ -34,7 +34,7 @@ spec:
             memory: "512M"
           limits:
             cpu: "1000m"
-            memory: "512M"
+            memory: "1G"
 
         # Request smaller persistent volumes.
         volumeClaimTemplate:
@@ -43,6 +43,37 @@ spec:
           resources:
             requests:
               storage: 100M
+
+  syncPolicy:
+    syncOptions:
+      - CreateNamespace=true
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: elasticsearch-kibana
+  namespace: argocd
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  destination:
+    namespace: elasticsearch
+    server: {{ .Values.spec.destination.server }}
+  project: default
+
+  source:
+    chart: kibana
+    repoURL: https://helm.elastic.co
+    targetRevision: 8.5.1
+    helm:
+      values: |
+        service:
+          type: NodePort
+          nodePort: 30086
+        image: "docker.elastic.co/kibana/kibana"
+        imageTag: "8.5.1"
+        imagePullPolicy: "IfNotPresent"
+        elasticsearchHosts: "https://elasticsearch-master:9200"
 
   syncPolicy:
     syncOptions:
