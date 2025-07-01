@@ -23,7 +23,15 @@ spec:
         migrateDatabaseJob:
           useHelmHooks: false
           applyCustomEnv: false
-        executor: "KubernetesExecutor"
+        executor: KubernetesExecutor
+        webserver:
+          service:
+            type: NodePort
+            ports:
+              - name: airflow-ui
+                port: 8080
+                targetPort: 8080
+                nodePort: 31151
   
   syncPolicy:
     syncOptions:
