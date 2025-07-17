@@ -1,0 +1,50 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: airflow
+  namespace: argocd
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  destination:
+    namespace: airflow
+    server: {{ .Values.spec.destination.server }}
+  project: default
+
+  source:
+    path: chart
+    repoURL: https://github.com/apache/airflow.git
+    targetRevision: 3.0.2
+    helm:
+      values: |
+        createUserJob:
+          useHelmHooks: false
+          applyCustomEnv: false
+        migrateDatabaseJob:
+          useHelmHooks: false
+          applyCustomEnv: false
+        executor: CeleryKubernetesExecutor
+        webserver:
+          service:
+            type: NodePort
+            ports:
+              - name: airflow-ui
+                port: 8080
+                targetPort: 8080
+                nodePort: 31151
+        dags:
+          gitSync:
+            enabled: true
+            repo: https://github.com/asprin107/sturdy-lamp.git
+            branch: mdw
+            ref: mdw
+            maxFailures: 0
+            subPath: "dags/mdw"
+
+        workers:
+          hpa:
+            enabled: true
+  
+  syncPolicy:
+    syncOptions:
+      - CreateNamespace=true
